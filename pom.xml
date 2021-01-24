@@ -38,7 +38,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
-			<artifactId>kotlin-stdlib-jdk11</artifactId>
+			<artifactId>kotlin-stdlib-jdk8</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>

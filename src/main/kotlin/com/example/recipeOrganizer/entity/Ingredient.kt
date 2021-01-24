@@ -1,5 +1,6 @@
 package com.example.recipeOrganizer.entity
 
+import com.example.recipeOrganizer.entity.constant.IngredientType
 import javax.persistence.*
 
 @Entity
@@ -12,9 +13,14 @@ data class Ingredient (
         @JoinColumn(name = "recipe_id")
         val recipe: Recipe,
 
+        //Exchange with specific entity to store more values on base ingredient
         val name: String,
 
         val quantity: Long,
 
-        val quantityType: String
+        val type: IngredientType,
+
+        @OneToOne
+        val unit: Unit
+
 )

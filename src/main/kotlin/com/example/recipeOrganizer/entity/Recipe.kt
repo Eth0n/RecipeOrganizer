@@ -11,6 +11,9 @@ data class Recipe (
         @OneToMany(mappedBy = "recipe")
        val ingredient: List<Ingredient>? = null,
 
+        @OneToMany(mappedBy = "recipe")
+        val step: List<Step>? = null,
+
        val name: String,
 
        val duration: Int
