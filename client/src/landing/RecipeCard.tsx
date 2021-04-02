@@ -1,4 +1,4 @@
-import { IRecipe, IShortRecipe } from "../interfaces/interfaces";
+import { IShortRecipe } from "../interfaces/interfaces";
 
 interface RecipeProps extends IShortRecipe {}
 
