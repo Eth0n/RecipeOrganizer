@@ -1,7 +1,9 @@
 package com.example.recipeOrganizer.repository
 
+import com.example.recipeOrganizer.entity.configuration.FileStorageProperties
 import org.springframework.core.io.FileSystemResource
 import org.springframework.stereotype.Repository
+import java.io.File
 import java.lang.RuntimeException
 import java.net.URL
 import java.nio.file.Files
@@ -10,11 +12,11 @@ import java.nio.file.Paths
 import java.util.*
 
 @Repository
-class FileSystemRepository {
-    val RESOURCES_DIR: URL = FileSystemRepository::class.java.getResource("")
-
+class FileSystemRepository(
+    var fileStorageProperties: FileStorageProperties
+) {
     fun save(content : ByteArray, imageName : String) : String {
-        val newFile: Path = Paths.get((Paths.get(RESOURCES_DIR.toURI()) as Any).toString() + Date().getTime().toString() + "-" + imageName)
+        val newFile: Path = Paths.get(fileStorageProperties.storageLocationPath + File.separator + Date().getTime().toString() + "-" + imageName)
         Files.createDirectories(newFile.getParent())
         Files.write(newFile, content)
         return newFile.toAbsolutePath()
