@@ -13,8 +13,9 @@ data class Ingredient (
         @JoinColumn(name = "recipe_id")
         val recipe: Recipe,
 
-        //Exchange with specific entity to store more values on base ingredient
-        val name: String,
+        @ManyToOne
+        @JoinColumn(name = "baseIngredient_id")
+        val baseIngredient: BaseIngredient,
 
         val quantity: Long,
 
