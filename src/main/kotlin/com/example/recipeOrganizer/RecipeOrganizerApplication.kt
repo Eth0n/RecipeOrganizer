@@ -9,10 +9,11 @@ import com.example.recipeOrganizer.entity.constant.IngredientType
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean
 
 @SpringBootApplication
-class ReceiptOrganizerApplication {
+class ReceiptOrganizerApplication : SpringBootServletInitializer() {
 	@Bean
 	fun generateDemoData(recipeRepo: RecipeRepository, ingredientRepo: IngredientRepository, unitRepository: UnitRepository, stepRepository: StepRepository, baseIngredientRepository: BaseIngredientRepository): CommandLineRunner {
 		return CommandLineRunner {
