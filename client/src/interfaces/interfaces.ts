@@ -24,7 +24,18 @@ export interface IRecipe {
 export interface IShortRecipe {
     name: string;
     duration: number;
-    id: number;
+    links: ILinks;
+}
+
+export interface ILinks {
+    ingredient: ILink;
+    recipe: ILink;
+    self: ILink;
+    step: ILink;
+}
+
+export interface ILink {
+    href: string;
 }
 
 export interface IStep {

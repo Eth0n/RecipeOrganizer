@@ -3,6 +3,7 @@ import { IRecipe } from "../interfaces/interfaces";
 type RecipeDetailsProps = Omit<IRecipe, "steps">;
 
 function RecipeDetails(props: RecipeDetailsProps) {
+    
     return (
         <div>
             <span>Name: Schniposa {props.name}</span>

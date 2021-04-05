@@ -1,9 +1,5 @@
-function Header() {
-  return (
-    <div className="section">
-        First block
-    </div>
-  );
+function Header(props: any) {
+    return <div className="section">{props.children}</div>;
 }
 
 export default Header;

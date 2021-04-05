@@ -5,36 +5,46 @@ import  RecipeCard from "./RecipeCard";
 
 function ListOfRecipes() {
 
-    const mockList : IShortRecipe[] = [
+    const mockList: IShortRecipe[] = [
         {
             name: "First recipe",
             duration: 200,
-            id: 999
+            links: {
+                ingredient: { href: "" },
+                recipe: { href: "" },
+                self: { href: "999" },
+                step: { href: "" },
+            },
         },
         {
             name: "Second recipe",
-            id: 998,
             duration: 300,
-        }
-    ]
+            links: {
+                ingredient: { href: "" },
+                recipe: { href: "" },
+                self: { href: "998" },
+                step: { href: "" },
+            },
+        },
+    ];
     const [list, setList] = useState<IShortRecipe[]>([...mockList]);
 
     useEffect(() => {
         Api.getRecipes().then((recipes) => {
             setList(recipes);
+            console.log(recipes)
         });
     }, []);
 
     return (
         <div className="section">
-            <div className="tile">
-                {list.map((recipe: IShortRecipe) => {
-                    return <RecipeCard 
-                        key={recipe.id}
-                        {...recipe}
-                    />
-                })}
-            </div>
+                <div className="tile">
+                    {list.map((recipe: IShortRecipe) => {
+                        return (
+                            <RecipeCard key={recipe.links.self.href} {...recipe} />
+                        );
+                    })}
+                </div>
         </div>
     );
 }
