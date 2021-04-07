@@ -8,24 +8,24 @@ function App() {
   return (
       <BrowserRouter>
           <Header>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-            </ul>
+              <ul>
+                  <li>
+                      <Link to="/">Home</Link>
+                  </li>
+              </ul>
           </Header>
 
           <Switch>
-              <Route path="/receipts/3">
-                  <RecipeDetails 
-                    durantion={300}
-                    id={500}
-                    ingredients={[]}
-                    name={"Schniposa"} />
+              <Route path="/receipts/:id">
+                  <RecipeDetails
+                      durantion={300}
+                      id={500}
+                      ingredients={[]}
+                      name={"Schniposa"}
+                  />
               </Route>
+              <Route path="/" exact={true} component={ListOfRecipes} />
           </Switch>
-          <ListOfRecipes />
-
       </BrowserRouter>
   );
 }
