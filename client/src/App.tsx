@@ -16,14 +16,7 @@ function App() {
           </Header>
 
           <Switch>
-              <Route path="/receipts/:id">
-                  <RecipeDetails
-                      durantion={300}
-                      id={500}
-                      ingredients={[]}
-                      name={"Schniposa"}
-                  />
-              </Route>
+              <Route path="/receipts/:id" component={RecipeDetails} />
               <Route path="/" exact={true} component={ListOfRecipes} />
           </Switch>
       </BrowserRouter>

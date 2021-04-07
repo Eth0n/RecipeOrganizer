@@ -1,18 +1,31 @@
-import { IRecipe } from "../interfaces/interfaces";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Api } from "../api/Api";
+import { IShortRecipe } from "../interfaces/interfaces";
 
-type RecipeDetailsProps = Omit<IRecipe, "steps">;
+type ParamType = { id: string };
 
-function RecipeDetails(props: RecipeDetailsProps) {
+function RecipeDetails() {
+
+    const params = useParams<ParamType>();
+
+    const [recipe, setRecipe] = useState<IShortRecipe>(); 
+    const [recipeName ] = useState("");
+
+    useEffect(() => {
+        Api.getRecipeById(params.id).then((fetchedRecipe) => {
+            setRecipe(fetchedRecipe);
+            console.log(fetchedRecipe);
+        });
+    }, [params.id, recipeName]);
     
     return (
+        recipe === undefined ? <></> :
         <div>
-            <span>Name: Schniposa {props.name}</span>
-            <span>Duration: {props.durantion} min</span>
-            <span>Zutaten: {props.ingredients}</span>
-            <span>Portionen: ???</span>
+            <span>Name: Schniposa {recipe.name}</span>
+            <span>Duration: {recipe.duration} min</span>
         </div>
     );
 }
 
 export default RecipeDetails;
-export type { RecipeDetailsProps };

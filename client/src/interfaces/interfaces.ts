@@ -14,9 +14,7 @@ export interface IUnit {
 }
 
 export interface IRecipe {
-    id: number;
-    ingredients: Ingredient[];
-    steps: IStep[];
+    links: ILinks;
     name: string;
     durantion: number;
 }
