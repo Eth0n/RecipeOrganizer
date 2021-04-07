@@ -22,7 +22,7 @@ function RecipeDetails() {
     return (
         recipe === undefined ? <></> :
         <div>
-            <span>Name: Schniposa {recipe.name}</span>
+            <span>Name: {recipe.name}</span>
             <span>Duration: {recipe.duration} min</span>
         </div>
     );

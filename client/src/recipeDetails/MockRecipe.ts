@@ -12,5 +12,6 @@ export function getExtdendedMockShortRecipe(
             self: { href: "999" },
             step: { href: "" },
         },
+        ...extension,
     };
 }

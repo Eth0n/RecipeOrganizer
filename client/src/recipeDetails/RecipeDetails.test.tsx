@@ -7,7 +7,7 @@ import { getExtdendedMockShortRecipe } from "./MockRecipe";
 test("renders the the recipe", async () => {
 
     jest.spyOn(Api, "getRecipeById").mockResolvedValue(
-        getExtdendedMockShortRecipe({})
+        getExtdendedMockShortRecipe({ name: "Schniposa"})
     );
 
     render(
