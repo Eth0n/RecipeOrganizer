@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Api } from "../api/Api";
 import { IShortRecipe } from "../interfaces/interfaces";
-import  RecipeCard from "./RecipeCard";
+import  RecipeCard from "./recipeCard/RecipeCard";
 
 function ListOfRecipes() {
 

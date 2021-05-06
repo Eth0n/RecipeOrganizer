@@ -1,6 +1,6 @@
 import './App.sass';
 import Header from './landing/Header';
-import ListOfRecipes from './landing/ListOfRecipes'
+import ListOfRecipes from './listOfRecipes/ListOfRecipes'
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import RecipeDetails from './recipeDetails/RecipeDetails';
 

@@ -1,8 +1,10 @@
-import { IShortRecipe } from "../interfaces/interfaces";
+import { IShortRecipe } from "../../interfaces/interfaces";
+import { getHrefLinksForRecipe } from "./HrefConverter";
 
 interface RecipeProps extends IShortRecipe {}
 
 function RecipeCard (props: RecipeProps) {
+    const links = getHrefLinksForRecipe(props.links);
     return (
         <div className="tile">
             <div className="card">
@@ -20,7 +22,7 @@ function RecipeCard (props: RecipeProps) {
                     <div className="content">
                         Recipe {props.name}
                     </div>
-                    <a href={props.links.self.href}>
+                    <a href={links.self.href}>
                         Recipe 
                     </a>
                 </div>

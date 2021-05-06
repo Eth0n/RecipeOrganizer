@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { IShortRecipe } from '../interfaces/interfaces';
-import { getExtdendedMockShortRecipe } from '../recipeDetails/MockRecipe';
+import { IShortRecipe } from '../../interfaces/interfaces';
+import { getExtdendedMockShortRecipe } from '../../recipeDetails/MockRecipe';
 import RecipeCard from './RecipeCard';
 
 test('renders a card with and image and text', async () => {

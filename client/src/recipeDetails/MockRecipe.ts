@@ -1,4 +1,4 @@
-import { IShortRecipe } from "../interfaces/interfaces";
+import { ILinks, IShortRecipe } from "../interfaces/interfaces";
 
 export function getExtdendedMockShortRecipe(
     extension: Partial<IShortRecipe>
@@ -6,12 +6,19 @@ export function getExtdendedMockShortRecipe(
     return {
         name: "Test recipe",
         duration: 500,
-        links: {
-            ingredient: { href: "" },
-            recipe: { href: "" },
-            self: { href: "999" },
-            step: { href: "" },
+        links: getExtendedLinks({}),
+        ...extension,
+    };
+}
+
+export function getExtendedLinks (extension: Partial<ILinks>) {
+    return {
+        ingredient: {
+            href: "http://localhost:8080/receipts/3/ingredient",
         },
+        recipe: { href: "http://localhost:8080/receipts/3" },
+        self: { href: "http://localhost:8080/receipts/3" },
+        step: { href: "http://localhost:8080/receipts/3/step" },
         ...extension,
     };
 }
