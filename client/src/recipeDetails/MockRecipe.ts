@@ -3,10 +3,15 @@ import { ILinks, IShortRecipe } from "../interfaces/interfaces";
 export function getExtdendedMockShortRecipe(
     extension: Partial<IShortRecipe>
 ): IShortRecipe {
+    const name = extension.name || "Test recipe";
     return {
-        name: "Test recipe",
+        name,
         duration: 500,
-        links: getExtendedLinks({}),
+        links: getExtendedLinks({
+            self: {
+                href: `http://localhost:8080/receipts/${name}`,
+            },
+        }),
         ...extension,
     };
 }
