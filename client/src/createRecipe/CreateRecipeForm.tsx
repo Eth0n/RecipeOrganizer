@@ -1,20 +1,19 @@
-function CreateRecipeForm(props: any) {
+import { ListOfSteps } from "./steps/ListOfSteps";
+import { TextInput } from "./TextInput";
+
+function CreateRecipeForm() {
     return (
-        <div className="section">
-            <div className="field">
-                <label className="label" htmlFor="recipe-name-input">
-                    Name
-                </label>
-                <div className="control">
-                    <input
-                        className="input"
-                        type="text"
-                        placeholder="Name vom Rezept"
-                        id={"recipe-name-input"}
-                    />
-                </div>
-            </div>
-        </div>
+        <>
+            <TextInput
+                label="Name"
+                placeholder="Name des Rezepts"
+            />
+            <TextInput 
+                label="Dauer in min"
+                placeholder="Dauer des Rezepts"
+            />
+            <ListOfSteps />
+        </>
     );
 }
 

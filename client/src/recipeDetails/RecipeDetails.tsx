@@ -15,7 +15,6 @@ function RecipeDetails() {
     useEffect(() => {
         Api.getRecipeById(params.id).then((fetchedRecipe) => {
             setRecipe(fetchedRecipe);
-            console.log(fetchedRecipe);
         });
     }, [params.id, recipeName]);
     
