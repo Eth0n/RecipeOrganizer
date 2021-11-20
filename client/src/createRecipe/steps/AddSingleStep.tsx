@@ -11,10 +11,7 @@ export function AddSingleStep(props: AddSingleStepProps) {
     const [step, setStep] = useState<CreatedStep>();
     const [description, setDescription] = useState<string>("");
 
-    // const [opened, setOpened] = useState<boolean>(false);
-
     function clickOnAddStep() {
-        //  setOpened(!opened);
         const newStep = new CreatedStep();
         setStep(newStep);
     }
@@ -23,9 +20,13 @@ export function AddSingleStep(props: AddSingleStepProps) {
         if (step) {
             step.setDescription(description);
             props.onStepAdded(step);
-            setStep(undefined);
-            setDescription("");
+            resetStep();
         }
+    }
+
+    function resetStep() {
+        setStep(undefined);
+        setDescription("");
     }
 
     function onHandleInput(event: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -63,7 +64,7 @@ export function AddSingleStep(props: AddSingleStepProps) {
                 </div>
                 <div className="column">
                     <button onClick={clickOnSaveStep}>Save</button>
-                    <button>Cancel</button>
+                    <button onClick={resetStep}>Cancel</button>
                 </div>
             </div>
         </div>

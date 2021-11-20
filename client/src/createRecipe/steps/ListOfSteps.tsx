@@ -17,6 +17,7 @@ export function ListOfSteps() {
 
     return (
         <>
+            <AddSingleStep onStepAdded={addStepToList} />
             <div className="box">
                 {list.map((step, index) => {
                     return (
@@ -53,7 +54,6 @@ export function ListOfSteps() {
                     );
                 })}
             </div>
-            <AddSingleStep onStepAdded={addStepToList} />
         </>
     );
 }
