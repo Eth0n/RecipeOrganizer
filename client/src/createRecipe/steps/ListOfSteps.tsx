@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { CreatedStep } from "./CreatedStep";
-import { AddSingleStep, OnStepAdded } from "./AddSingleStep";
+import { AddSingleStep } from "./AddSingleStep";
 import { StepBuilder } from "./StepBuilder";
 import { UsedIngredient } from "../ingredients/UsedIngredient";
 import { UsedIngredientBuilder } from "../ingredients/UsedIngredientBuilder";
-import { Color, ColoredBox } from "../ColoredBox";
+import { SingleStep } from "./SingleStep";
 
 export function ListOfSteps() {
     const [list, setSteps] = useState<CreatedStep[]>([
@@ -20,38 +20,7 @@ export function ListOfSteps() {
             <AddSingleStep onStepAdded={addStepToList} />
             <div className="box">
                 {list.map((step, index) => {
-                    return (
-                        <div className="columns" key={index}>
-                            <div className="column is-1">
-                                {
-                                    <ColoredBox
-                                        color={Color.Blue}
-                                        text={index + 1}
-                                    />
-                                }
-                            </div>
-                            <div className="column">
-                                {step.getDescription()}
-                            </div>
-                            <div className="column is-3">
-                                {step
-                                    .getUsedIngredients()
-                                    .map((ingredient, i) => {
-                                        return (
-                                            <ColoredBox
-                                                key={i}
-                                                color={Color.Red}
-                                                text={ingredient.name.substring(
-                                                    0,
-                                                    1
-                                                )}
-                                                title={ingredient.name}
-                                            />
-                                        );
-                                    })}
-                            </div>
-                        </div>
-                    );
+                    return <SingleStep key={index} id={index} step={step} />;
                 })}
             </div>
         </>

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { UsedIngredient } from "../ingredients/UsedIngredient";
 import { CreatedStep } from "./CreatedStep";
+import { EditModeStep } from "./EditModeStep";
 
 export type OnStepAdded = (newStep: CreatedStep) => void;
 export interface AddSingleStepProps {
@@ -9,14 +9,13 @@ export interface AddSingleStepProps {
 
 export function AddSingleStep(props: AddSingleStepProps) {
     const [step, setStep] = useState<CreatedStep>();
-    const [description, setDescription] = useState<string>("");
 
     function clickOnAddStep() {
         const newStep = new CreatedStep();
         setStep(newStep);
     }
 
-    function clickOnSaveStep() {
+    function clickOnSaveStep(description: string) {
         if (step) {
             step.setDescription(description);
             props.onStepAdded(step);
@@ -26,17 +25,6 @@ export function AddSingleStep(props: AddSingleStepProps) {
 
     function resetStep() {
         setStep(undefined);
-        setDescription("");
-    }
-
-    function onHandleInput(event: React.ChangeEvent<HTMLTextAreaElement>) {
-        setDescription(event.target.value);
-    }
-
-    function onEnterPress(event: React.KeyboardEvent<HTMLTextAreaElement>) {
-        if (event.key === "Enter" && !event.shiftKey) {
-            clickOnSaveStep();
-        }
     }
 
     return !step ? (
@@ -44,29 +32,10 @@ export function AddSingleStep(props: AddSingleStepProps) {
             + Schritt hinzufügen
         </div>
     ) : (
-        <div className="box">
-            <div className="columns">
-                <div className="column">
-                    <textarea
-                        className="textarea"
-                        placeholder="Beschreibe hier den Schritt kurz"
-                        rows={2}
-                        value={description}
-                        onChange={onHandleInput}
-                        onKeyDown={onEnterPress}
-                    ></textarea>
-                    {step
-                        .getUsedIngredients()
-                        .map((usedIngredient: UsedIngredient) => {
-                            return <div>{usedIngredient.name}</div>;
-                        })}
-                    {<div>+ Zutat</div>}
-                </div>
-                <div className="column">
-                    <button onClick={clickOnSaveStep}>Save</button>
-                    <button onClick={resetStep}>Cancel</button>
-                </div>
-            </div>
-        </div>
+        <EditModeStep
+            step={step}
+            onSave={clickOnSaveStep}
+            onCancel={resetStep}
+        />
     );
 }
