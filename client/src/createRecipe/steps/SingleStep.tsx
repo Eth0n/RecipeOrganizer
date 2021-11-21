@@ -25,12 +25,7 @@ export function SingleStep(props: SingleStepProps) {
     }
 
     return editing ? (
-        <EditModeStep
-            step={props.step}
-            initalDescription={props.step.getDescription()}
-            onSave={onSave}
-            onCancel={onExitEdit}
-        />
+        <EditModeStep step={props.step} onSave={onSave} onCancel={onExitEdit} />
     ) : (
         <div className="columns">
             <div className="column is-1">

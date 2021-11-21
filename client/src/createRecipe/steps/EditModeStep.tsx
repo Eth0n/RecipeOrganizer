@@ -4,14 +4,13 @@ import { CreatedStep } from "./CreatedStep";
 
 export interface EditModeStepProps {
     step: CreatedStep;
-    initalDescription?: string;
     onSave: (description: string) => void;
     onCancel: () => void;
 }
 
 export function EditModeStep(props: EditModeStepProps) {
     const [description, setDescription] = useState<string>(
-        props.initalDescription || ""
+        props.step.getDescription()
     );
 
     function onHandleInput(event: React.ChangeEvent<HTMLTextAreaElement>) {

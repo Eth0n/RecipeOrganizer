@@ -19,4 +19,8 @@ export class CreatedStep {
     public addIngredient(ingredient: UsedIngredient): void {
         this.usedIngredients.push(ingredient);
     }
+
+    public removeIngredient(ingredient: UsedIngredient): void {
+        // remove ingredient
+    }
 }
