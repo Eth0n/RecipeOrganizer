@@ -1,4 +1,4 @@
-import { ILinks, IShortRecipe } from "../interfaces/interfaces";
+import { ILinksRecipe, IShortRecipe } from "../interfaces/interfaces";
 
 export function getExtdendedMockShortRecipe(
     extension: Partial<IShortRecipe>
@@ -16,7 +16,7 @@ export function getExtdendedMockShortRecipe(
     };
 }
 
-export function getExtendedLinks (extension: Partial<ILinks>) {
+export function getExtendedLinks(extension: Partial<ILinksRecipe>) {
     return {
         ingredient: {
             href: "http://localhost:8080/receipts/3/ingredient",

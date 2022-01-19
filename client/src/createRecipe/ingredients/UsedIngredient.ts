@@ -1,5 +1,10 @@
 export interface UsedIngredient {
     name: string;
     quantity: number;
-    unit: string;
+    unit: UsedUnit;
+}
+
+export interface UsedUnit {
+    name: string;
+    shortDescription: string;
 }

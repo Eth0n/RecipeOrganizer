@@ -42,6 +42,6 @@ function getMockIngredient(name: string): UsedIngredient {
     return new UsedIngredientBuilder()
         .name(name)
         .quantity(10)
-        .unit("g")
+        .unit({ name: "Gramm", shortDescription: "gr" })
         .build();
 }

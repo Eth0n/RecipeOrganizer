@@ -1,17 +1,23 @@
 import { ListOfSteps } from "./steps/ListOfSteps";
-import { TextInput } from "./TextInput";
+import { InputType, TextInput } from "./TextInput";
 
 function CreateRecipeForm() {
     return (
         <>
-            <TextInput
-                label="Name"
-                placeholder="Name des Rezepts"
-            />
-            <TextInput 
-                label="Dauer in min"
-                placeholder="Dauer des Rezepts"
-            />
+            <div className="section">
+                <TextInput
+                    label="Name"
+                    placeholder="Name des Rezepts"
+                    inputType={InputType.Text}
+                />
+            </div>
+            <div className="section">
+                <TextInput
+                    label="Dauer in min"
+                    placeholder="Dauer des Rezepts"
+                    inputType={InputType.Text}
+                />
+            </div>
             <ListOfSteps />
         </>
     );

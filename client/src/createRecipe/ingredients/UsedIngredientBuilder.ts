@@ -1,4 +1,4 @@
-import { UsedIngredient } from "./UsedIngredient";
+import { UsedIngredient, UsedUnit } from "./UsedIngredient";
 
 export class UsedIngredientBuilder {
     private ingredient: UsedIngredient;
@@ -7,7 +7,10 @@ export class UsedIngredientBuilder {
         this.ingredient = {
             name: "",
             quantity: 0,
-            unit: "",
+            unit: {
+                name: "",
+                shortDescription: "",
+            },
         };
     }
 
@@ -21,7 +24,7 @@ export class UsedIngredientBuilder {
         return this;
     }
 
-    public unit(unit: string): UsedIngredientBuilder {
+    public unit(unit: UsedUnit): UsedIngredientBuilder {
         this.ingredient.unit = unit;
         return this;
     }

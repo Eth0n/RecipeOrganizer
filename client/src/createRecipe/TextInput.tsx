@@ -1,24 +1,46 @@
+import { useState } from "react";
+
+export enum InputType {
+    Text = "text",
+    Number = "number",
+}
+
 export interface TextInputProps {
     placeholder: string;
     label: string;
+    inputType: InputType;
+    value?: string | number;
+    onChange?: (value: string) => void;
 }
 
 export function TextInput(props: TextInputProps) {
+    const [value, setValue] = useState<string>(
+        `${props.value !== undefined ? props.value : ""}`
+    );
+
     const labelFor = getLabelFor(props.label);
+
+    function onHandleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setValue(event.target.value);
+        if (props.onChange) {
+            props.onChange(event.target.value);
+        }
+    }
+
     return (
-        <div className="section">
-            <div className="field">
-                <label className="label" htmlFor={labelFor}>
-                    {props.label}
-                </label>
-                <div className="control">
-                    <input
-                        className="input"
-                        type="text"
-                        placeholder={props.placeholder}
-                        id={labelFor}
-                    />
-                </div>
+        <div className="field">
+            <label className="label" htmlFor={labelFor}>
+                {props.label}
+            </label>
+            <div className="control">
+                <input
+                    className="input"
+                    type={props.inputType}
+                    placeholder={props.placeholder}
+                    id={labelFor}
+                    value={value}
+                    onChange={onHandleChange}
+                />
             </div>
         </div>
     );

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AddIngredient } from "../ingredients/AddIngredient";
 import { UsedIngredient } from "../ingredients/UsedIngredient";
 import { CreatedStep } from "./CreatedStep";
 
@@ -27,6 +28,11 @@ export function EditModeStep(props: EditModeStepProps) {
         props.onSave(description);
     }
 
+    function saveIngredient(ingredient: UsedIngredient) {
+        props.step.addIngredient(ingredient);
+        console.log(props.step.getUsedIngredients());
+    }
+
     return (
         <div className="box">
             <div className="columns">
@@ -44,7 +50,7 @@ export function EditModeStep(props: EditModeStepProps) {
                         .map((usedIngredient: UsedIngredient) => {
                             return <div>{usedIngredient.name}</div>;
                         })}
-                    {<div>+ Zutat</div>}
+                    {<AddIngredient saveIngredient={saveIngredient} />}
                 </div>
                 <div className="column">
                     <button onClick={onSavePress}>Save</button>

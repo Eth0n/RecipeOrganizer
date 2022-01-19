@@ -1,8 +1,8 @@
-import { ILink, ILinks } from "../../interfaces/interfaces";
+import { ILink, ILinksRecipe } from "../../interfaces/interfaces";
 
-export type UiLinks = ILinks;
+export type UiLinks = ILinksRecipe;
 
-export function getHrefLinksForRecipe(recipeLinks: ILinks): UiLinks {
+export function getHrefLinksForRecipe(recipeLinks: ILinksRecipe): UiLinks {
     return {
         ingredient: createReplacedLink(recipeLinks.ingredient),
         recipe: createReplacedLink(recipeLinks.recipe),

@@ -5,16 +5,17 @@ export interface Ingredient {
     quantity: number;
     type: IIngredientType;
     unit: IUnit;
+    links: ILinksRecipe;
 }
 
 export interface IUnit {
-    id: number;
     name: string;
     shortDescription: string;
+    links: ILinksUnit;
 }
 
 export interface IRecipe {
-    links: ILinks;
+    links: ILinksRecipe;
     name: string;
     durantion: number;
 }
@@ -22,10 +23,15 @@ export interface IRecipe {
 export interface IShortRecipe {
     name: string;
     duration: number;
-    links: ILinks;
+    links: ILinksRecipe;
 }
 
-export interface ILinks {
+export interface ILinksUnit {
+    self: ILink;
+    unit: ILink;
+}
+
+export interface ILinksRecipe {
     ingredient: ILink;
     recipe: ILink;
     self: ILink;
