@@ -1,5 +1,5 @@
+import { InputType, TextInput } from "../common/textInput/TextInput";
 import { ListOfSteps } from "./steps/ListOfSteps";
-import { InputType, TextInput } from "./TextInput";
 
 function CreateRecipeForm() {
     return (

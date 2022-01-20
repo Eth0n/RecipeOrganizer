@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { InputType, TextInput } from "../TextInput";
+import { TextInput, InputType } from "../../common/textInput/TextInput";
 import { AddUnitSection } from "./AddUnitSection";
 import { UsedIngredient, UsedUnit } from "./UsedIngredient";
 

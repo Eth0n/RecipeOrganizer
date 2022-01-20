@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Color, ColoredBox } from "../ColoredBox";
+import { Color, ColoredBox } from "../../common/coloredBox/ColoredBox";
 import { CreatedStep } from "./CreatedStep";
 import { EditModeStep } from "./EditModeStep";
 
