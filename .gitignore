@@ -33,3 +33,4 @@ HELP.md
 ### Client ###
 /client/node_modules/
 /client/.eslintcache
+/client/coverage
