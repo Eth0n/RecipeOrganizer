@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { Api } from "../../api/Api";
 import { IUnit } from "../../interfaces/interfaces";
-import { UsedUnit } from "./UsedIngredient";
+import { UsedUnit } from "../interfaces/interfaces";
 
 export interface AddUnitSectionProps {
     onUnitChanged: (newUnit: UsedUnit) => void;

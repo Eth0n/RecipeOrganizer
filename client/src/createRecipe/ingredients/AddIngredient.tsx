@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TextInput, InputType } from "../../common/textInput/TextInput";
+import { UsedIngredient, UsedUnit } from "../interfaces/interfaces";
 import { AddUnitSection } from "./AddUnitSection";
-import { UsedIngredient, UsedUnit } from "./UsedIngredient";
 
 export interface AddIngredientProps {
     saveIngredient: (ingredient: UsedIngredient) => void;

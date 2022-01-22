@@ -11,6 +11,7 @@ export interface TextInputProps {
     inputType: InputType;
     value?: string | number;
     onChange?: (value: string) => void;
+    onChangeNumber?: (value: number) => void;
 }
 
 export function TextInput(props: TextInputProps) {
@@ -19,9 +20,13 @@ export function TextInput(props: TextInputProps) {
     const labelFor = getLabelFor(props.label);
 
     function onHandleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        setValue(event.target.value);
-        if (props.onChange) {
-            props.onChange(event.target.value);
+        const newValue = event.target.value;
+        setValue(newValue);
+        if (props.inputType === InputType.Number) {
+            const asNumber = Number.parseInt(`${newValue}`);
+            props.onChangeNumber && props.onChangeNumber(asNumber);
+        } else {
+            props.onChange && props.onChange(newValue);
         }
     }
 

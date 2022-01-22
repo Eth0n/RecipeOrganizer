@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Color, ColoredBox } from "../../common/coloredBox/ColoredBox";
-import { CreatedStep } from "./CreatedStep";
+import { Step, UsedIngredient } from "../interfaces/interfaces";
 import { EditModeStep } from "./EditModeStep";
 
 export interface SingleStepProps {
-    id: number;
-    step: CreatedStep;
+    step: Step;
 }
 
 export function SingleStep(props: SingleStepProps) {
@@ -16,7 +15,7 @@ export function SingleStep(props: SingleStepProps) {
     }
 
     function onSave(description: string) {
-        props.step.setDescription(description);
+        props.step.description = description;
         onExitEdit();
     }
 
@@ -29,20 +28,22 @@ export function SingleStep(props: SingleStepProps) {
     ) : (
         <div className="columns">
             <div className="column is-1">
-                {<ColoredBox color={Color.Blue} text={props.id + 1} />}
+                {<ColoredBox color={Color.Blue} text={props.step.id + 1} />}
             </div>
-            <div className="column">{props.step.getDescription()}</div>
+            <div className="column">{props.step.description}</div>
             <div className="column is-3">
-                {props.step.getUsedIngredients().map((ingredient, i) => {
-                    return (
-                        <ColoredBox
-                            key={i}
-                            color={Color.Red}
-                            text={ingredient.name.substring(0, 1)}
-                            title={ingredient.name}
-                        />
-                    );
-                })}
+                {props.step.ingredients.map(
+                    (ingredient: UsedIngredient, i: number) => {
+                        return (
+                            <ColoredBox
+                                key={i}
+                                color={Color.Red}
+                                text={ingredient.name.substring(0, 1)}
+                                title={ingredient.name}
+                            />
+                        );
+                    }
+                )}
             </div>
             <div className="column is-1">
                 <button onClick={onEdit}>Edit</button>

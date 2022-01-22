@@ -1,17 +1,16 @@
 import { useState } from "react";
 import { AddIngredient } from "../ingredients/AddIngredient";
-import { UsedIngredient } from "../ingredients/UsedIngredient";
-import { CreatedStep } from "./CreatedStep";
+import { Step, UsedIngredient } from "../interfaces/interfaces";
 
 export interface EditModeStepProps {
-    step: CreatedStep;
+    step: Step;
     onSave: (description: string) => void;
     onCancel: () => void;
 }
 
 export function EditModeStep(props: EditModeStepProps) {
     const [description, setDescription] = useState<string>(
-        props.step.getDescription()
+        props.step.description
     );
 
     function onHandleInput(event: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -29,8 +28,8 @@ export function EditModeStep(props: EditModeStepProps) {
     }
 
     function saveIngredient(ingredient: UsedIngredient) {
-        props.step.addIngredient(ingredient);
-        console.log(props.step.getUsedIngredients());
+        props.step.ingredients.push(ingredient);
+        console.log(props.step.ingredients);
     }
 
     return (
@@ -45,11 +44,11 @@ export function EditModeStep(props: EditModeStepProps) {
                         onChange={onHandleInput}
                         onKeyDown={onEnterPress}
                     ></textarea>
-                    {props.step
-                        .getUsedIngredients()
-                        .map((usedIngredient: UsedIngredient) => {
+                    {props.step.ingredients.map(
+                        (usedIngredient: UsedIngredient) => {
                             return <div>{usedIngredient.name}</div>;
-                        })}
+                        }
+                    )}
                     {<AddIngredient saveIngredient={saveIngredient} />}
                 </div>
                 <div className="column">

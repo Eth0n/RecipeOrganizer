@@ -1,23 +1,28 @@
 import { useState } from "react";
-import { CreatedStep } from "./CreatedStep";
+import { generateId } from "../../common/IdGenerator";
+import { Step } from "../interfaces/interfaces";
 import { EditModeStep } from "./EditModeStep";
 
-export type OnStepAdded = (newStep: CreatedStep) => void;
+export type OnStepAdded = (newStep: Step) => void;
 export interface AddSingleStepProps {
     onStepAdded: OnStepAdded;
 }
 
 export function AddSingleStep(props: AddSingleStepProps) {
-    const [step, setStep] = useState<CreatedStep>();
+    const [step, setStep] = useState<Step>();
 
     function clickOnAddStep() {
-        const newStep = new CreatedStep();
+        const newStep: Step = {
+            id: generateId(),
+            description: "",
+            ingredients: [],
+        };
         setStep(newStep);
     }
 
     function clickOnSaveStep(description: string) {
         if (step) {
-            step.setDescription(description);
+            step.description = description;
             props.onStepAdded(step);
             resetStep();
         }

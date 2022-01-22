@@ -1,4 +1,4 @@
-import { UsedIngredient, UsedUnit } from "./UsedIngredient";
+import { UsedIngredient, UsedUnit } from "../interfaces/interfaces";
 
 export class UsedIngredientBuilder {
     private ingredient: UsedIngredient;
