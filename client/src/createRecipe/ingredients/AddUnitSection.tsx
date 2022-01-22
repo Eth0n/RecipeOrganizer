@@ -15,7 +15,7 @@ export function AddUnitSection(props: AddUnitSectionProps) {
         Api.getAllUnits().then((units) => {
             setListOfUnits(units);
         });
-    }, [listOfUnits, props]);
+    }, [listOfUnits.length]);
 
     function onUnitChanged(event: ChangeEvent<HTMLSelectElement>) {
         setSelectedUnit(event.target.value);
@@ -42,12 +42,15 @@ export function AddUnitSection(props: AddUnitSectionProps) {
                     <label className="label">Einheit</label>
                     <div className="control">
                         <div className="select">
-                            <select onChange={onUnitChanged}>
-                                <option value="eigene">Eigene</option>
-                                {listOfUnits.map((unit, index) => {
+                            <select
+                                onChange={onUnitChanged}
+                                defaultValue={
+                                    listOfUnits[0] && listOfUnits[0].name
+                                }
+                            >
+                                {listOfUnits.map((unit) => {
                                     return (
                                         <option
-                                            selected={index === 0}
                                             key={unit.name}
                                             value={unit.name}
                                         >
@@ -55,6 +58,7 @@ export function AddUnitSection(props: AddUnitSectionProps) {
                                         </option>
                                     );
                                 })}
+                                <option value="eigene">Eigene</option>
                             </select>
                         </div>
                     </div>
