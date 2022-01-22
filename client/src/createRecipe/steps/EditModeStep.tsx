@@ -29,6 +29,7 @@ export function EditModeStep(props: EditModeStepProps) {
 
     function onSavePress() {
         props.onSave(description);
+        saveIngredient();
     }
 
     function setAmount(amount: number) {
@@ -53,8 +54,13 @@ export function EditModeStep(props: EditModeStepProps) {
     }
 
     function saveIngredient() {
-        props.step.ingredients.push(temporaryIngredient);
-        console.log(props.step.ingredients);
+        if (
+            temporaryIngredient.name !== "" &&
+            temporaryIngredient.quantity !== 0
+        ) {
+            props.step.ingredients.push(temporaryIngredient);
+            console.log(props.step.ingredients);
+        }
     }
 
     return (
@@ -72,16 +78,16 @@ export function EditModeStep(props: EditModeStepProps) {
                     {props.step.ingredients.map(
                         (usedIngredient: UsedIngredient) => {
                             return (
-                                <>
-                                    <div>{usedIngredient.name}</div>
-                                    <div>
+                                <div key={usedIngredient.name}>
+                                    <span>{usedIngredient.name}</span>
+                                    <span>
                                         {usedIngredient.quantity}{" "}
                                         {usedIngredient.unit
                                             ? usedIngredient.unit
                                                   .shortDescription
                                             : ""}
-                                    </div>
-                                </>
+                                    </span>
+                                </div>
                             );
                         }
                     )}
