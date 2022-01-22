@@ -37,7 +37,10 @@ export function AddUnitSection(props: AddUnitSectionProps) {
                         <div className="select">
                             <select
                                 onChange={onUnitChanged}
-                                defaultValue={props.selectedUnit?.name}
+                                defaultValue={
+                                    props.listOfUnits[0] &&
+                                    props.listOfUnits[0].name
+                                }
                             >
                                 {props.listOfUnits.map((unit) => {
                                     return (
