@@ -38,10 +38,9 @@ export function AddIngredient(props: AddIngredientProps) {
         props.setIngredient(value);
     }
 
-    function onHandleInputAmount(value: string) {
-        const valueAsNumber = Number.parseInt(value);
-        setAmount(valueAsNumber);
-        props.setAmount(valueAsNumber);
+    function onHandleInputAmount(value: number) {
+        setAmount(value);
+        props.setAmount(value);
     }
 
     function onAddIngredient() {
@@ -65,7 +64,7 @@ export function AddIngredient(props: AddIngredientProps) {
                     placeholder="Menge"
                     label="Menge"
                     inputType={InputType.Number}
-                    onChange={onHandleInputAmount}
+                    onChangeNumber={onHandleInputAmount}
                     value={amount}
                 />
             </div>

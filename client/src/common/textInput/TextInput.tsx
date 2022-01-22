@@ -23,6 +23,9 @@ export function TextInput(props: TextInputProps) {
         const newValue = event.target.value;
         setValue(newValue);
         if (props.inputType === InputType.Number) {
+            if (Number.isNaN(newValue)) {
+                return;
+            }
             const asNumber = Number.parseInt(`${newValue}`);
             props.onChangeNumber && props.onChangeNumber(asNumber);
         } else {
