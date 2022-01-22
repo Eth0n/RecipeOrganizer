@@ -71,7 +71,18 @@ export function EditModeStep(props: EditModeStepProps) {
                     ></textarea>
                     {props.step.ingredients.map(
                         (usedIngredient: UsedIngredient) => {
-                            return <div>{usedIngredient.name}</div>;
+                            return (
+                                <>
+                                    <div>{usedIngredient.name}</div>
+                                    <div>
+                                        {usedIngredient.quantity}{" "}
+                                        {usedIngredient.unit
+                                            ? usedIngredient.unit
+                                                  .shortDescription
+                                            : ""}
+                                    </div>
+                                </>
+                            );
                         }
                     )}
                     {
