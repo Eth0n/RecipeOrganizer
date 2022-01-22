@@ -13,7 +13,7 @@ export interface Step {
 export interface UsedIngredient {
     name: string;
     quantity: number;
-    unit: UsedUnit;
+    unit?: UsedUnit;
 }
 
 export interface UsedUnit {

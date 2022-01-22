@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AddIngredient } from "../ingredients/AddIngredient";
-import { Step, UsedIngredient } from "../interfaces/interfaces";
+import { Step, UsedIngredient, UsedUnit } from "../interfaces/interfaces";
 
 export interface EditModeStepProps {
     step: Step;
@@ -12,6 +12,10 @@ export function EditModeStep(props: EditModeStepProps) {
     const [description, setDescription] = useState<string>(
         props.step.description
     );
+    const [temporaryIngredient, setTempIngredient] = useState<UsedIngredient>({
+        name: "",
+        quantity: 0,
+    });
 
     function onHandleInput(event: React.ChangeEvent<HTMLTextAreaElement>) {
         setDescription(event.target.value);
@@ -27,8 +31,29 @@ export function EditModeStep(props: EditModeStepProps) {
         props.onSave(description);
     }
 
-    function saveIngredient(ingredient: UsedIngredient) {
-        props.step.ingredients.push(ingredient);
+    function setAmount(amount: number) {
+        setTempIngredient({
+            ...temporaryIngredient,
+            quantity: amount,
+        });
+    }
+
+    function setName(name: string) {
+        setTempIngredient({
+            ...temporaryIngredient,
+            name,
+        });
+    }
+
+    function setSelectedUnit(unit: UsedUnit) {
+        setTempIngredient({
+            ...temporaryIngredient,
+            unit: unit,
+        });
+    }
+
+    function saveIngredient() {
+        props.step.ingredients.push(temporaryIngredient);
         console.log(props.step.ingredients);
     }
 
@@ -49,7 +74,14 @@ export function EditModeStep(props: EditModeStepProps) {
                             return <div>{usedIngredient.name}</div>;
                         }
                     )}
-                    {<AddIngredient saveIngredient={saveIngredient} />}
+                    {
+                        <AddIngredient
+                            saveIngredient={saveIngredient}
+                            setAmount={setAmount}
+                            setIngredient={setName}
+                            setSelectedUnit={setSelectedUnit}
+                        />
+                    }
                 </div>
                 <div className="column">
                     <button onClick={onSavePress}>Save</button>

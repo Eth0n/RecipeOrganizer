@@ -1,21 +1,14 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { Api } from "../../api/Api";
-import { IUnit } from "../../interfaces/interfaces";
+import { ChangeEvent, useState } from "react";
 import { UsedUnit } from "../interfaces/interfaces";
 
 export interface AddUnitSectionProps {
+    selectedUnit: UsedUnit | undefined;
+    listOfUnits: UsedUnit[];
     onUnitChanged: (newUnit: UsedUnit) => void;
 }
 
 export function AddUnitSection(props: AddUnitSectionProps) {
-    const [listOfUnits, setListOfUnits] = useState<IUnit[]>([]);
     const [selectedUnit, setSelectedUnit] = useState<string>();
-
-    useEffect(() => {
-        Api.getAllUnits().then((units) => {
-            setListOfUnits(units);
-        });
-    }, [listOfUnits.length]);
 
     function onUnitChanged(event: ChangeEvent<HTMLSelectElement>) {
         setSelectedUnit(event.target.value);
@@ -31,8 +24,8 @@ export function AddUnitSection(props: AddUnitSectionProps) {
         }
     }
 
-    function getUnitFromList(name: string): IUnit {
-        return listOfUnits.filter((unit) => unit.name === name)[0];
+    function getUnitFromList(name: string): UsedUnit {
+        return props.listOfUnits.filter((unit) => unit.name === name)[0];
     }
 
     return (
@@ -44,11 +37,9 @@ export function AddUnitSection(props: AddUnitSectionProps) {
                         <div className="select">
                             <select
                                 onChange={onUnitChanged}
-                                defaultValue={
-                                    listOfUnits[0] && listOfUnits[0].name
-                                }
+                                defaultValue={props.selectedUnit?.name}
                             >
-                                {listOfUnits.map((unit) => {
+                                {props.listOfUnits.map((unit) => {
                                     return (
                                         <option
                                             key={unit.name}
