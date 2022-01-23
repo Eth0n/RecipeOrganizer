@@ -3,6 +3,9 @@ import { InputType, TextInput } from "../common/textInput/TextInput";
 import { CreatedRecipe, Step } from "./interfaces/interfaces";
 import { ListOfSteps } from "./steps/ListOfSteps";
 
+export const PlaceholderName = "Name des Rezepts";
+export const PlaceholderDuration = "Dauer des Rezepts";
+
 function CreateRecipeForm() {
     const [createdRecipe, setCreatedRecipe] = useState<CreatedRecipe>({
         name: "",
@@ -36,7 +39,7 @@ function CreateRecipeForm() {
             <div className="section">
                 <TextInput
                     label="Name"
-                    placeholder="Name des Rezepts"
+                    placeholder={PlaceholderName}
                     inputType={InputType.Text}
                     value={createdRecipe.name}
                     onChange={onNameChange}
@@ -45,7 +48,7 @@ function CreateRecipeForm() {
             <div className="section">
                 <TextInput
                     label="Dauer in min"
-                    placeholder="Dauer des Rezepts"
+                    placeholder={PlaceholderDuration}
                     inputType={InputType.Number}
                     value={createdRecipe.duration}
                     onChangeNumber={onDurationChange}
