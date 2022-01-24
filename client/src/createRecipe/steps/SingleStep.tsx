@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { Color, ColoredBox } from "../../common/coloredBox/ColoredBox";
+import { IUnit } from "../../interfaces/interfaces";
 import { Step, UsedIngredient } from "../interfaces/interfaces";
 import { EditModeStep } from "./EditModeStep";
 
+export const UiTestEdit = "Edit";
+
 export interface SingleStepProps {
     step: Step;
+    availableUnits: IUnit[];
 }
 
 export function SingleStep(props: SingleStepProps) {
@@ -24,7 +28,12 @@ export function SingleStep(props: SingleStepProps) {
     }
 
     return editing ? (
-        <EditModeStep step={props.step} onSave={onSave} onCancel={onExitEdit} />
+        <EditModeStep
+            availableUnits={props.availableUnits}
+            step={props.step}
+            onSave={onSave}
+            onCancel={onExitEdit}
+        />
     ) : (
         <div className="columns">
             <div className="column is-1">
@@ -46,7 +55,7 @@ export function SingleStep(props: SingleStepProps) {
                 )}
             </div>
             <div className="column is-1">
-                <button onClick={onEdit}>Edit</button>
+                <button onClick={onEdit}>{UiTestEdit}</button>
             </div>
         </div>
     );

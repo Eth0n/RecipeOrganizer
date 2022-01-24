@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
-import { Api } from "../../api/Api";
+import { useState } from "react";
 import { TextInput, InputType } from "../../common/textInput/TextInput";
 import { IUnit } from "../../interfaces/interfaces";
 import { UsedUnit } from "../interfaces/interfaces";
 import { AddUnitSection } from "./AddUnitSection";
 
+export const PlaceholderIngredientName = "Zutat";
+export const PlaceholderIngredientAmount = "Menge";
+
 export interface AddIngredientProps {
+    availableUnits: IUnit[];
     setAmount: (amount: number) => void;
     setIngredient: (ingredient: string) => void;
     setSelectedUnit: (unit: UsedUnit) => void;
@@ -16,17 +19,6 @@ export function AddIngredient(props: AddIngredientProps) {
     const [selectedUnit, setSelectedUnit] = useState<UsedUnit>();
     const [ingredient, setIngredient] = useState<string>("");
     const [amount, setAmount] = useState<number>(0);
-    const [availableUnits, setAvailableUnits] = useState<IUnit[]>([]);
-    useEffect(() => {
-        Api.getAllUnits().then((units) => {
-            setAvailableUnits(units);
-            const initalUnit = units[0];
-            setSelectedUnit({
-                name: initalUnit.name,
-                shortDescription: initalUnit.shortDescription,
-            });
-        });
-    }, [availableUnits.length]);
 
     function onUnitChanged(newUnit: UsedUnit) {
         setSelectedUnit(newUnit);
@@ -51,8 +43,8 @@ export function AddIngredient(props: AddIngredientProps) {
         <div className="columns">
             <div className="column">
                 <TextInput
-                    placeholder="Zutat"
-                    label="Zutat"
+                    placeholder={PlaceholderIngredientName}
+                    label={PlaceholderIngredientName}
                     inputType={InputType.Text}
                     onChange={onHandleInputIngredient}
                     value={ingredient}
@@ -61,8 +53,8 @@ export function AddIngredient(props: AddIngredientProps) {
 
             <div className="column">
                 <TextInput
-                    placeholder="Menge"
-                    label="Menge"
+                    placeholder={PlaceholderIngredientAmount}
+                    label={PlaceholderIngredientAmount}
                     inputType={InputType.Number}
                     onChangeNumber={onHandleInputAmount}
                     value={amount}
@@ -71,7 +63,7 @@ export function AddIngredient(props: AddIngredientProps) {
 
             <AddUnitSection
                 selectedUnit={selectedUnit}
-                listOfUnits={availableUnits}
+                listOfUnits={props.availableUnits}
                 onUnitChanged={onUnitChanged}
             />
 

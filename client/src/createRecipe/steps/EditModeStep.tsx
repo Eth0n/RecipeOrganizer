@@ -1,9 +1,13 @@
 import { useState } from "react";
+import { IUnit } from "../../interfaces/interfaces";
 import { AddIngredient } from "../ingredients/AddIngredient";
 import { Step, UsedIngredient, UsedUnit } from "../interfaces/interfaces";
 
+export const PlaceHolderDescription = "Beschreibe hier den Schritt kurz";
+export const UiTextSave = "Save";
 export interface EditModeStepProps {
     step: Step;
+    availableUnits: IUnit[];
     onSave: (description: string) => void;
     onCancel: () => void;
 }
@@ -69,7 +73,7 @@ export function EditModeStep(props: EditModeStepProps) {
                 <div className="column">
                     <textarea
                         className="textarea"
-                        placeholder="Beschreibe hier den Schritt kurz"
+                        placeholder={PlaceHolderDescription}
                         rows={2}
                         value={description}
                         onChange={onHandleInput}
@@ -79,7 +83,7 @@ export function EditModeStep(props: EditModeStepProps) {
                         (usedIngredient: UsedIngredient) => {
                             return (
                                 <div key={usedIngredient.name}>
-                                    <span>{usedIngredient.name}</span>
+                                    <span>{usedIngredient.name} </span>
                                     <span>
                                         {usedIngredient.quantity}{" "}
                                         {usedIngredient.unit
@@ -93,6 +97,7 @@ export function EditModeStep(props: EditModeStepProps) {
                     )}
                     {
                         <AddIngredient
+                            availableUnits={props.availableUnits}
                             saveIngredient={saveIngredient}
                             setAmount={setAmount}
                             setIngredient={setName}
@@ -101,7 +106,7 @@ export function EditModeStep(props: EditModeStepProps) {
                     }
                 </div>
                 <div className="column">
-                    <button onClick={onSavePress}>Save</button>
+                    <button onClick={onSavePress}>{UiTextSave}</button>
                     <button onClick={props.onCancel}>Cancel</button>
                 </div>
             </div>
