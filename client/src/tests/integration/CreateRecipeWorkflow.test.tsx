@@ -75,8 +75,8 @@ describe("CreateRecipeWorkflowSpec", () => {
         userEvent.click(screen.getByText(UiTestEdit));
 
         // First ingredient should show up
-        expect(screen.getByText(expectedIngredient1)).toBeDefined();
-        expect(screen.getByText(expectedAmount1)).toBeInTheDocument();
+        await screen.findByText(expectedIngredient1);
+        await screen.findByText(expectedAmount1);
 
         // Then enter a second
         const expectedStep2 = "Gurke reiben";
