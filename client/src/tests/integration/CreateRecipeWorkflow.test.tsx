@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import CreateRecipeForm, {
     PlaceholderName,
@@ -12,11 +12,11 @@ import {
     PlaceHolderDescription,
     UiTextSave,
 } from "../../createRecipe/steps/EditModeStep";
-import { UiTestEdit } from "../../createRecipe/steps/SingleStep";
+import { UiTextEdit } from "../../createRecipe/steps/SingleStep";
 import { Api } from "../../api/Api";
 import { getExtendedUnitLinks } from "../../dataPreparation/UnitPreparator.test";
 
-const mockUnits = [
+export const getMockUnits = () => [
     {
         name: "Stück",
         links: getExtendedUnitLinks(),
@@ -32,7 +32,7 @@ const mockUnits = [
 describe("CreateRecipeWorkflowSpec", () => {
     beforeEach(() => {
         const spyAllUnits = jest.spyOn(Api, "getAllUnits");
-        spyAllUnits.mockResolvedValue(mockUnits);
+        spyAllUnits.mockResolvedValue(getMockUnits());
     });
 
     it("can create a whole recipe in one go", async () => {
@@ -49,7 +49,7 @@ describe("CreateRecipeWorkflowSpec", () => {
         userEvent.click(addStep);
 
         // Enter step info
-        const expectedStep1 = "Zwiebeln schneiden";
+        const expectedStep1 = "Dinge klein schneiden";
         const expectedIngredient1 = "Zwiebeln";
         const expectedAmount1 = "10";
 
@@ -67,16 +67,16 @@ describe("CreateRecipeWorkflowSpec", () => {
             screen.getByPlaceholderText(PlaceholderIngredientAmount),
             expectedAmount1
         );
-        // Pick other unit
+        // TODO: Pick other unit
+
         userEvent.click(screen.getByText(UiTextSave));
 
         // Edit step, add a second ingredient
-
-        userEvent.click(screen.getByText(UiTestEdit));
+        userEvent.click(screen.getByText(UiTextEdit));
 
         // First ingredient should show up
-        await screen.findByText(expectedIngredient1);
-        await screen.findByText(expectedAmount1);
+        await screen.findByText(expectedIngredient1, { exact: false });
+        await screen.findByText(expectedAmount1, { exact: false });
 
         // Then enter a second
         const expectedStep2 = "Gurke reiben";

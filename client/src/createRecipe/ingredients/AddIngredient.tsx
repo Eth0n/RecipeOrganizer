@@ -6,6 +6,7 @@ import { AddUnitSection } from "./AddUnitSection";
 
 export const PlaceholderIngredientName = "Zutat";
 export const PlaceholderIngredientAmount = "Menge";
+export const UITextPlusSignAddIngredient = "+";
 
 export interface AddIngredientProps {
     availableUnits: IUnit[];
@@ -68,7 +69,12 @@ export function AddIngredient(props: AddIngredientProps) {
             />
 
             <div className="column">
-                <button onClick={onAddIngredient}>+</button>
+                <button
+                    title={UITextPlusSignAddIngredient}
+                    onClick={onAddIngredient}
+                >
+                    {UITextPlusSignAddIngredient}
+                </button>
             </div>
         </div>
     );

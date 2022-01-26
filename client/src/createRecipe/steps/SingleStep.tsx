@@ -4,7 +4,7 @@ import { IUnit } from "../../interfaces/interfaces";
 import { Step, UsedIngredient } from "../interfaces/interfaces";
 import { EditModeStep } from "./EditModeStep";
 
-export const UiTestEdit = "Edit";
+export const UiTextEdit = "Edit";
 
 export interface SingleStepProps {
     step: Step;
@@ -13,14 +13,27 @@ export interface SingleStepProps {
 
 export function SingleStep(props: SingleStepProps) {
     const [editing, setEditing] = useState<boolean>(false);
+    const [step, setStep] = useState<Step>(props.step);
 
     function onEdit() {
         setEditing(true);
     }
 
     function onSave(description: string) {
-        props.step.description = description;
+        setStep({
+            ...step,
+            description,
+        });
         onExitEdit();
+    }
+
+    function onAddIngredient(ingredient: UsedIngredient) {
+        const newIngredients = [...step.ingredients, ingredient];
+        step.ingredients = newIngredients;
+        setStep({
+            ...step,
+            ingredients: newIngredients,
+        });
     }
 
     function onExitEdit() {
@@ -31,6 +44,7 @@ export function SingleStep(props: SingleStepProps) {
         <EditModeStep
             availableUnits={props.availableUnits}
             step={props.step}
+            onAddIngredient={onAddIngredient}
             onSave={onSave}
             onCancel={onExitEdit}
         />
@@ -39,9 +53,9 @@ export function SingleStep(props: SingleStepProps) {
             <div className="column is-1">
                 {<ColoredBox color={Color.Blue} text={props.step.id + 1} />}
             </div>
-            <div className="column">{props.step.description}</div>
+            <div className="column">{step.description}</div>
             <div className="column is-3">
-                {props.step.ingredients.map(
+                {step.ingredients.map(
                     (ingredient: UsedIngredient, i: number) => {
                         return (
                             <ColoredBox
@@ -55,7 +69,7 @@ export function SingleStep(props: SingleStepProps) {
                 )}
             </div>
             <div className="column is-1">
-                <button onClick={onEdit}>{UiTestEdit}</button>
+                <button onClick={onEdit}>{UiTextEdit}</button>
             </div>
         </div>
     );
