@@ -9,6 +9,7 @@ export interface TextInputProps {
     placeholder: string;
     label: string;
     inputType: InputType;
+    max?: number;
     value?: string | number;
     onChange?: (value: string) => void;
     onChangeNumber?: (value: number) => void;
@@ -46,6 +47,7 @@ export function TextInput(props: TextInputProps) {
                     id={labelFor}
                     value={value}
                     onChange={onHandleChange}
+                    max={props.max}
                 />
             </div>
         </div>

@@ -1,5 +1,10 @@
 import { ChangeEvent, useState } from "react";
+import { InputType, TextInput } from "../../common/textInput/TextInput";
 import { UsedUnit } from "../interfaces/interfaces";
+
+export const PlaceholderCustomUnitName = "Name";
+export const PlaceholderCustomUnitShort = "kurz";
+export const LabelUnit = "Einheit";
 
 export interface AddUnitSectionProps {
     selectedUnit: UsedUnit | undefined;
@@ -9,13 +14,15 @@ export interface AddUnitSectionProps {
 
 export function AddUnitSection(props: AddUnitSectionProps) {
     const [selectedUnit, setSelectedUnit] = useState<string>();
+    const [customUnitName, setCustomUnitName] = useState<string>("");
+    const [customUnitShort, setCustomUnitShort] = useState<string>("");
 
     function onUnitChanged(event: ChangeEvent<HTMLSelectElement>) {
         setSelectedUnit(event.target.value);
         if (selectedUnit === "eigene") {
             const customUnit: UsedUnit = {
-                name: "",
-                shortDescription: "",
+                name: customUnitName,
+                shortDescription: customUnitShort,
             };
             props.onUnitChanged(customUnit);
         } else {
@@ -28,19 +35,35 @@ export function AddUnitSection(props: AddUnitSectionProps) {
         return props.listOfUnits.filter((unit) => unit.name === name)[0];
     }
 
+    function onCustomUnitNameChange(name: string): void {
+        setCustomUnitName(name);
+        props.onUnitChanged({
+            name,
+            shortDescription: customUnitShort,
+        });
+    }
+
+    function onCustomUnitShortChange(short: string): void {
+        setCustomUnitShort(short);
+        props.onUnitChanged({
+            name: customUnitName,
+            shortDescription: short,
+        });
+    }
+
     return (
         <>
             <div className="column">
                 <div className="field">
-                    <label className="label">Einheit</label>
+                    <label className="label" htmlFor="unit">
+                        {LabelUnit}
+                    </label>
                     <div className="control">
                         <div className="select">
                             <select
+                                id={"unit"}
                                 onChange={onUnitChanged}
-                                defaultValue={
-                                    props.listOfUnits[0] &&
-                                    props.listOfUnits[0].name
-                                }
+                                defaultValue={getDefaultSelectedValue(props)}
                             >
                                 {props.listOfUnits.map((unit) => {
                                     return (
@@ -61,25 +84,31 @@ export function AddUnitSection(props: AddUnitSectionProps) {
 
             {selectedUnit === "eigene" && (
                 <div className="column">
-                    <div className="field">
-                        <label className="label">Name</label>
-                        <input
-                            className="input"
-                            type="text"
-                            placeholder="Name"
-                        />
-                    </div>
-                    <div className="field">
-                        <label className="label">Kurz</label>
-                        <input
-                            className="input"
-                            type="text"
-                            placeholder="Kurz"
-                            max="3"
-                        />
-                    </div>
+                    <TextInput
+                        inputType={InputType.Text}
+                        placeholder={PlaceholderCustomUnitName}
+                        label="Name"
+                        value={customUnitName}
+                        onChange={onCustomUnitNameChange}
+                    />
+                    <TextInput
+                        inputType={InputType.Text}
+                        placeholder={PlaceholderCustomUnitShort}
+                        label="Kurz"
+                        max={3}
+                        value={customUnitShort}
+                        onChange={onCustomUnitShortChange}
+                    />
                 </div>
             )}
         </>
     );
+}
+
+function getDefaultSelectedValue(props: AddUnitSectionProps): string {
+    if (props.selectedUnit) {
+        return props.selectedUnit.name;
+    }
+
+    return props.listOfUnits[0] && props.listOfUnits[0].name;
 }
