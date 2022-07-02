@@ -13,6 +13,7 @@ export interface TextInputProps {
     value?: string | number;
     onChange?: (value: string) => void;
     onChangeNumber?: (value: number) => void;
+    onKeyDown?: (event: React.KeyboardEvent) => void;
 }
 
 export function TextInput(props: TextInputProps) {
@@ -47,6 +48,7 @@ export function TextInput(props: TextInputProps) {
                     id={labelFor}
                     value={value}
                     onChange={onHandleChange}
+                    onKeyDown={props.onKeyDown}
                     max={props.max}
                 />
             </div>

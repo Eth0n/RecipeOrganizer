@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Autocomplete } from "../../common/autocomplete/Autocomplete";
 import { TextInput, InputType } from "../../common/textInput/TextInput";
 import { IUnit } from "../../interfaces/interfaces";
 import { UsedUnit } from "../interfaces/interfaces";
@@ -18,7 +19,6 @@ export interface AddIngredientProps {
 
 export function AddIngredient(props: AddIngredientProps) {
     const [selectedUnit, setSelectedUnit] = useState<UsedUnit>();
-    const [ingredient, setIngredient] = useState<string>("");
     const [amount, setAmount] = useState<number>(0);
 
     function onUnitChanged(newUnit: UsedUnit) {
@@ -27,7 +27,6 @@ export function AddIngredient(props: AddIngredientProps) {
     }
 
     function onHandleInputIngredient(value: string) {
-        setIngredient(value);
         props.setIngredient(value);
     }
 
@@ -43,12 +42,17 @@ export function AddIngredient(props: AddIngredientProps) {
     return (
         <div className="columns">
             <div className="column">
-                <TextInput
+                <Autocomplete
                     placeholder={PlaceholderIngredientName}
                     label={PlaceholderIngredientName}
-                    inputType={InputType.Text}
-                    onChange={onHandleInputIngredient}
-                    value={ingredient}
+                    suggestions={[
+                        "Zwiebeln",
+                        "Ananas",
+                        "Apples",
+                        "Gurke",
+                        "Kartoffeln",
+                    ]}
+                    onPickIngredient={onHandleInputIngredient}
                 />
             </div>
 

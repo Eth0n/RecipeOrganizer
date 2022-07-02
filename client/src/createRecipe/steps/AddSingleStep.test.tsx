@@ -31,6 +31,11 @@ describe("AddSingleStep.test.tsx", () => {
             expectedIngredientName
         );
 
+        userEvent.type(
+            screen.getByPlaceholderText(PlaceholderIngredientName),
+            "{enter}"
+        );
+
         const expectedAmount = "10";
         userEvent.type(
             screen.getByPlaceholderText(PlaceholderIngredientAmount),
