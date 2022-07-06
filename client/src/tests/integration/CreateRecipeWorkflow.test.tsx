@@ -14,22 +14,9 @@ import {
 } from "../../createRecipe/steps/EditModeStep";
 import { UiTextEdit } from "../../createRecipe/steps/SingleStep";
 import { Api } from "../../api/Api";
-import { getExtendedUnitLinks } from "../../dataPreparation/UnitPreparator.test";
+import { getMockUnits } from "./mocks/MockUnits";
 
-export const getMockUnits = () => [
-    {
-        name: "Stück",
-        links: getExtendedUnitLinks(),
-        shortDescription: "st",
-    },
-    {
-        name: "Mililliter",
-        links: getExtendedUnitLinks(),
-        shortDescription: "ml",
-    },
-];
-
-xdescribe("CreateRecipeWorkflowSpec", () => {
+describe("CreateRecipeWorkflowSpec", () => {
     beforeEach(() => {
         const spyAllUnits = jest.spyOn(Api, "getAllUnits");
         spyAllUnits.mockResolvedValue(getMockUnits());
@@ -64,7 +51,6 @@ xdescribe("CreateRecipeWorkflowSpec", () => {
         );
 
         const suggestion1 = await screen.findByText(expectedIngredient1);
-        console.log("suggestion1 element", suggestion1);
         userEvent.click(suggestion1);
 
         userEvent.type(
@@ -98,7 +84,6 @@ xdescribe("CreateRecipeWorkflowSpec", () => {
         );
 
         const suggestion2 = await screen.findByText(expectedIngredient2);
-        console.log("suggestion2 element", suggestion2);
         suggestion2.click();
 
         userEvent.type(

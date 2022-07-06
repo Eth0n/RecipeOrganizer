@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { getMockUnits } from "../../tests/integration/CreateRecipeWorkflow.test";
+import { getMockUnits } from "../../tests/integration/mocks/MockUnits";
 import {
     PlaceholderIngredientAmount,
     PlaceholderIngredientName,

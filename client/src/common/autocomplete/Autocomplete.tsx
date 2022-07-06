@@ -40,13 +40,14 @@ export function Autocomplete(props: AutocompleteProps) {
     }
 
     function onClick(event: React.MouseEvent<HTMLLIElement>) {
+        const pickedOption = event.currentTarget.textContent || "";
+        props.onPickIngredient(pickedOption);
         setAutoCompleteState({
             activeSuggestion: 0,
             filteredSuggestions: [],
             showSuggestions: false,
-            userInput: event.currentTarget.innerText,
+            userInput: pickedOption,
         });
-        props.onPickIngredient(event.currentTarget.innerText);
     }
 
     function onKeyDown(event: React.KeyboardEvent) {
@@ -54,6 +55,7 @@ export function Autocomplete(props: AutocompleteProps) {
         const newState = AutoCompleter.onKeyDown(autoCompleteState, key);
         if (newState) {
             setAutoCompleteState(newState);
+            props.onPickIngredient(newState.userInput);
         }
     }
 

@@ -1,4 +1,5 @@
-import { ILinksUnit, IUnit } from "../interfaces/interfaces";
+import { IUnit } from "../interfaces/interfaces";
+import { getExtendedUnitLinks } from "../tests/integration/mocks/MockUnits";
 import { prepareListOfUnits } from "./UnitPreparator";
 
 describe("UnitPreparatorSpec", () => {
@@ -24,13 +25,3 @@ describe("UnitPreparatorSpec", () => {
         });
     });
 });
-
-export function getExtendedUnitLinks(
-    extension?: Partial<ILinksUnit>
-): ILinksUnit {
-    return {
-        self: { href: "http://localhost:8080/units/1" },
-        unit: { href: "http://localhost:8080/units/1" },
-        ...extension,
-    };
-}
