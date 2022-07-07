@@ -20,6 +20,16 @@ function CreateRecipeForm() {
         });
     }
 
+    function deleteStepFromList(deletedStep: Step) {
+        const updatedSteps = createdRecipe.steps.filter(
+            (item) => item.id !== deletedStep.id
+        );
+        setCreatedRecipe({
+            ...createdRecipe,
+            steps: updatedSteps,
+        });
+    }
+
     function onNameChange(name: string) {
         setCreatedRecipe({
             ...createdRecipe,
@@ -57,6 +67,7 @@ function CreateRecipeForm() {
             <ListOfSteps
                 list={createdRecipe.steps}
                 addStepToList={addStepToList}
+                deleteStepFromList={deleteStepFromList}
             />
         </>
     );

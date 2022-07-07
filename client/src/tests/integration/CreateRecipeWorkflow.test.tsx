@@ -6,13 +6,14 @@ import CreateRecipeForm, {
 import {
     PlaceholderIngredientAmount,
     PlaceholderIngredientName,
+    UITextPlusSignAddIngredient,
 } from "../../createRecipe/ingredients/AddIngredient";
 import { UiTextAddStep } from "../../createRecipe/steps/AddSingleStep";
 import {
     PlaceHolderDescription,
     UiTextSave,
 } from "../../createRecipe/steps/EditModeStep";
-import { UiTextEdit } from "../../createRecipe/steps/SingleStep";
+import { UiTextDelete, UiTextEdit } from "../../createRecipe/steps/SingleStep";
 import { Api } from "../../api/Api";
 import { getMockUnits } from "./mocks/MockUnits";
 
@@ -31,66 +32,70 @@ describe("CreateRecipeWorkflowSpec", () => {
         userEvent.type(nameInput, expectedRecipeName);
         expect(nameInput).toHaveValue(expectedRecipeName);
 
-        // Add a step
-        const addStep = screen.getByText(UiTextAddStep);
-        userEvent.click(addStep);
-
-        // Enter step info
-        const expectedStep1 = "Dinge klein schneiden";
-        const expectedIngredient1 = "Zwiebeln";
-        const expectedAmount1 = "10";
-
-        userEvent.type(
-            screen.getByPlaceholderText(PlaceHolderDescription),
-            expectedStep1
-        );
-
-        userEvent.type(
-            screen.getByPlaceholderText(PlaceholderIngredientName),
-            "Z"
-        );
-
-        const suggestion1 = await screen.findByText(expectedIngredient1);
-        userEvent.click(suggestion1);
-
-        userEvent.type(
-            screen.getByPlaceholderText(PlaceholderIngredientAmount),
-            expectedAmount1
-        );
+        await addStep("Dinge klein schneiden", "Zwiebeln", 10);
         // TODO: Pick other unit
-
-        userEvent.click(screen.getByText(UiTextSave));
 
         // Edit step, add a second ingredient
         userEvent.click(screen.getByText(UiTextEdit));
 
         // First ingredient should show up
-        await screen.findByText(expectedIngredient1, { exact: false });
-        await screen.findByText(expectedAmount1, { exact: false });
+        await screen.findByText("Zwiebeln", { exact: true });
+        await screen.findByText("10", { exact: true });
 
         // Then enter a second
-        const expectedStep2 = "Gurke reiben";
-        const expectedIngredient2 = "Gurke";
-        const expectedAmount2 = "100";
+        await addIngredient("Gurke", 100);
+        userEvent.click(screen.getByText(UITextPlusSignAddIngredient));
 
-        userEvent.type(
-            screen.getByPlaceholderText(PlaceHolderDescription),
-            expectedStep2
-        );
+        // Second ingredient should show up
+        await screen.findByText("Gurke", { exact: true });
+        await screen.findByText("100", { exact: true });
+    });
+    it("delete first step from list of steps", async () => {
+        render(<CreateRecipeForm />);
+        await addStep("erster Step", "Kartoffeln", 5);
+        await addStep("zweiter Step", "Apples", 1);
 
-        userEvent.type(
-            screen.getByPlaceholderText(PlaceholderIngredientName),
-            expectedIngredient2
-        );
+        const deleteButtons = screen.getAllByText(UiTextDelete);
+        userEvent.click(deleteButtons[0]);
 
-        const suggestion2 = await screen.findByText(expectedIngredient2);
-        suggestion2.click();
-
-        userEvent.type(
-            screen.getByPlaceholderText(PlaceholderIngredientAmount),
-            expectedAmount2
-        );
-
-        // Should show up immediately
+        const firstStep = screen.queryByText("erster Step", { exact: true });
+        const secondStep = screen.queryByText("zweiter Step", { exact: true });
+        expect(secondStep).not.toBeNull();
+        expect(firstStep).toBeNull();
     });
 });
+
+async function addStep(desc: string, ingredient: string, amount: number) {
+    // Add a step
+    const addStep = screen.getByText(UiTextAddStep);
+    userEvent.click(addStep);
+
+    // Enter step info
+    const expectedStep1 = desc;
+    userEvent.type(
+        screen.getByPlaceholderText(PlaceHolderDescription),
+        expectedStep1
+    );
+
+    await addIngredient(ingredient, amount);
+
+    userEvent.click(screen.getByText(UiTextSave));
+}
+
+async function addIngredient(ingredient: string, amount: number) {
+    const expectedIngredient1 = ingredient;
+    const expectedAmount1 = `${amount}`;
+
+    userEvent.type(
+        screen.getByPlaceholderText(PlaceholderIngredientName),
+        ingredient.substring(0, 1)
+    );
+
+    const suggestion1 = await screen.findByText(expectedIngredient1);
+    userEvent.click(suggestion1);
+
+    userEvent.type(
+        screen.getByPlaceholderText(PlaceholderIngredientAmount),
+        expectedAmount1
+    );
+}

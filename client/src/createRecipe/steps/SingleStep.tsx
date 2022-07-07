@@ -5,10 +5,12 @@ import { Step, UsedIngredient } from "../interfaces/interfaces";
 import { EditModeStep } from "./EditModeStep";
 
 export const UiTextEdit = "Edit";
+export const UiTextDelete = "Delete";
 
 export interface SingleStepProps {
     step: Step;
     availableUnits: IUnit[];
+    deleteStep: (stepToDelete: Step) => void;
 }
 
 export function SingleStep(props: SingleStepProps) {
@@ -25,6 +27,10 @@ export function SingleStep(props: SingleStepProps) {
             description,
         });
         onExitEdit();
+    }
+
+    function deleteStep() {
+        props.deleteStep(step);
     }
 
     function onAddIngredient(ingredient: UsedIngredient) {
@@ -70,6 +76,7 @@ export function SingleStep(props: SingleStepProps) {
             </div>
             <div className="column is-1">
                 <button onClick={onEdit}>{UiTextEdit}</button>
+                <button onClick={deleteStep}>{UiTextDelete}</button>
             </div>
         </div>
     );

@@ -62,12 +62,3 @@ function getExtendedTextInputProps(
         ...extension,
     };
 }
-
-/* function getMockStep(extension?: Partial<Step>): Step {
-    return {
-        id: "",
-        description: "",
-        ingredients: [],
-        ...extension,
-    };
-} */

@@ -7,7 +7,7 @@ import { AddUnitSection } from "./AddUnitSection";
 
 export const PlaceholderIngredientName = "Zutat";
 export const PlaceholderIngredientAmount = "Menge";
-export const UITextPlusSignAddIngredient = "+";
+export const UITextPlusSignAddIngredient = "+ Add";
 
 export interface AddIngredientProps {
     availableUnits: IUnit[];
