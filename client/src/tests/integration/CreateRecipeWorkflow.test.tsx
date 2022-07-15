@@ -19,6 +19,7 @@ import { getMockUnits } from "./mocks/MockUnits";
 
 describe("CreateRecipeWorkflowSpec", () => {
     beforeEach(() => {
+        jest.spyOn(Api, "postUnit").mockResolvedValue({});
         const spyAllUnits = jest.spyOn(Api, "getAllUnits");
         spyAllUnits.mockResolvedValue(getMockUnits());
     });

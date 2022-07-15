@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { InputType, TextInput } from "../common/textInput/TextInput";
+import { dispatchUnitIfNecessary } from "./ingredients/UnitDispatcher";
 import { CreatedRecipe, Step } from "./interfaces/interfaces";
 import { ListOfSteps } from "./steps/ListOfSteps";
 
@@ -14,6 +15,7 @@ function CreateRecipeForm() {
     });
 
     function addStepToList(createdStep: Step) {
+        dispatchUnitIfNecessary(createdStep.ingredients);
         setCreatedRecipe({
             ...createdRecipe,
             steps: [...createdRecipe.steps, createdStep],

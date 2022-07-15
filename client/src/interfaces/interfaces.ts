@@ -8,10 +8,13 @@ export interface Ingredient {
     links: ILinksRecipe;
 }
 
-export interface IUnit {
+export interface IUnit extends IPostUnit {
+    links: ILinksUnit;
+}
+
+export interface IPostUnit {
     name: string;
     shortDescription: string;
-    links: ILinksUnit;
 }
 
 export interface IRecipe {

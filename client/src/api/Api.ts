@@ -3,7 +3,7 @@ import {
     prepareRecipe,
 } from "../dataPreparation/RecipeListPreparator";
 import { prepareListOfUnits } from "../dataPreparation/UnitPreparator";
-import { IShortRecipe, IUnit } from "../interfaces/interfaces";
+import { IPostUnit, IShortRecipe, IUnit } from "../interfaces/interfaces";
 
 const BASE_URL_RECEIPES = "/receipts";
 const BASE_URL_UNITS = "/units";
@@ -38,6 +38,27 @@ export class Api {
                 const units = json._embedded.units;
                 resolve(prepareListOfUnits(units));
             });
+        });
+    }
+
+    public static postUnit(newUnit: IPostUnit) {
+        return new Promise((resolve, reject) => {
+            fetch(`${BASE_URL_UNITS}`, {
+                method: "POST",
+                body: JSON.stringify(newUnit),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then(async (response) => {
+                    const json = await response.json();
+                    const unit = prepareListOfUnits([json])[0];
+                    console.log(unit);
+                    resolve(unit);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         });
     }
 }

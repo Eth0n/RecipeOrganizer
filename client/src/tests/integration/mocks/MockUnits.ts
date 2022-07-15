@@ -1,3 +1,4 @@
+import { UsedUnit } from "../../../createRecipe/interfaces/interfaces";
 import { ILinksUnit } from "../../../interfaces/interfaces";
 
 export const getMockUnits = () => [
@@ -12,6 +13,14 @@ export const getMockUnits = () => [
         shortDescription: "ml",
     },
 ];
+
+export function getExtendedMockUnit(extension?: Partial<UsedUnit>): UsedUnit {
+    return {
+        name: "Mililliter",
+        shortDescription: "ml",
+        ...extension,
+    };
+}
 
 export function getExtendedUnitLinks(
     extension?: Partial<ILinksUnit>
