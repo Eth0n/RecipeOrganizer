@@ -39,18 +39,27 @@ export function EditModeStepReactForm(props: EditModeStepProps) {
             <div className="columns">
                 <div className="column">
                     <form onSubmit={onSubmit}>
-                        <textarea
-                            {...register("description")}
-                            className="textarea"
-                            placeholder={PlaceHolderDescription}
-                            rows={2}
-                        ></textarea>
-                        <input
-                            type="submit"
-                            placeholder={UiTextSave}
-                            value={UiTextSave}
-                        />
-                        <button onClick={props.onCancel}>Cancel</button>
+                        {
+                            // Description
+                            <textarea
+                                {...register("description")}
+                                className="textarea"
+                                placeholder={PlaceHolderDescription}
+                                rows={2}
+                            ></textarea>
+                        }
+                        {
+                            // Save button
+                            <input
+                                type="submit"
+                                placeholder={UiTextSave}
+                                value={UiTextSave}
+                            />
+                        }
+                        {
+                            // Cancel button
+                            <button onClick={props.onCancel}>Cancel</button>
+                        }
                     </form>
                     {props.step.ingredients.map(
                         (usedIngredient: UsedIngredient) => {
