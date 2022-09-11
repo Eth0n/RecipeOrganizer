@@ -2,8 +2,12 @@ import React, { Fragment, useState } from "react";
 import { Key } from "ts-key-enum";
 import { AutoCompleter } from "./AutoCompleter";
 import "./AutoComplete.css";
+import { Path, UseFormRegister } from "react-hook-form";
+import { IFormValues } from "../../createRecipe/interfaces/interfaces";
 
 export interface AutocompleteProps {
+    formName: Path<IFormValues>;
+    register: UseFormRegister<IFormValues>;
     suggestions: string[];
     label: string;
     placeholder: string;
@@ -113,6 +117,7 @@ export function Autocomplete(props: AutocompleteProps) {
                 </label>
                 <div className="control">
                     <input
+                        {...props.register(props.formName)}
                         className="input"
                         type="text"
                         placeholder={props.placeholder}

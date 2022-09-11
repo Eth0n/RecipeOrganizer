@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { Path, UseFormRegister } from "react-hook-form";
+import { IFormValues } from "../../createRecipe/interfaces/interfaces";
 
 export enum InputType {
     Text = "text",
@@ -6,34 +7,16 @@ export enum InputType {
 }
 
 export interface TextInputProps {
+    formName: Path<IFormValues>;
+    register: UseFormRegister<IFormValues>;
     placeholder: string;
     label: string;
     inputType: InputType;
     max?: number;
-    value?: string | number;
-    onChange?: (value: string) => void;
-    onChangeNumber?: (value: number) => void;
-    onKeyDown?: (event: React.KeyboardEvent) => void;
 }
 
 export function TextInput(props: TextInputProps) {
-    const [value, setValue] = useState<string>(initializeValue(props));
-
     const labelFor = getLabelFor(props.label);
-
-    function onHandleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        const newValue = event.target.value;
-        setValue(newValue);
-        if (props.inputType === InputType.Number) {
-            if (Number.isNaN(newValue)) {
-                return;
-            }
-            const asNumber = Number.parseInt(`${newValue}`);
-            props.onChangeNumber && props.onChangeNumber(asNumber);
-        } else {
-            props.onChange && props.onChange(newValue);
-        }
-    }
 
     return (
         <div className="field">
@@ -42,13 +25,11 @@ export function TextInput(props: TextInputProps) {
             </label>
             <div className="control">
                 <input
+                    {...props.register(props.formName)}
                     className="input"
                     type={props.inputType}
                     placeholder={props.placeholder}
                     id={labelFor}
-                    value={value}
-                    onChange={onHandleChange}
-                    onKeyDown={props.onKeyDown}
                     max={props.max}
                 />
             </div>
@@ -58,13 +39,4 @@ export function TextInput(props: TextInputProps) {
 
 export function getLabelFor(label: string) {
     return `recipe-${label.toLowerCase()}-input`;
-}
-
-function initializeValue(props: TextInputProps): string {
-    if (props.inputType === InputType.Text) {
-        return `${props.value !== undefined ? props.value : ""}`;
-    } else {
-        const asNumber = Number.parseInt(`${props.value}`);
-        return `${asNumber}`;
-    }
 }

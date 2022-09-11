@@ -20,3 +20,17 @@ export interface UsedUnit {
     name: string;
     shortDescription: string;
 }
+
+export interface IFormValues {
+    // Recipe
+    recipeName: string;
+    duration: number;
+    // Step
+    description: string;
+    // Ingredient
+    ingredientName: string;
+    amount: number;
+    unit: string;
+    customUnit: string;
+    customShort: string;
+}

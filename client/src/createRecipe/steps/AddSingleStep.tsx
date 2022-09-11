@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { generateId } from "../../common/IdGenerator";
 import { IUnit } from "../../interfaces/interfaces";
-import { Step, UsedIngredient } from "../interfaces/interfaces";
-import { EditModeStep } from "./EditModeStep";
+import { Step } from "../interfaces/interfaces";
+import { EditModeStepReactForm } from "./EditModeStepReactForm";
 
 export const UiTextAddStep = "Schritt hinzufügen";
 
@@ -23,23 +23,6 @@ export function AddSingleStep(props: AddSingleStepProps) {
         setStep({ ...step, id: generateId() });
     }
 
-    function clickOnSaveStep(description: string) {
-        if (step) {
-            step.description = description;
-            props.onStepAdded(step);
-            resetStep();
-        }
-    }
-
-    function onAddIngredient(ingredient: UsedIngredient) {
-        const newIngredients = [...step.ingredients, ingredient];
-        step.ingredients = newIngredients;
-        setStep({
-            ...step,
-            ingredients: newIngredients,
-        });
-    }
-
     function resetStep() {
         setStep({
             id: "",
@@ -54,11 +37,9 @@ export function AddSingleStep(props: AddSingleStepProps) {
             <span> {UiTextAddStep}</span>
         </div>
     ) : (
-        <EditModeStep
+        <EditModeStepReactForm
             availableUnits={props.availableUnits}
             step={step}
-            onAddIngredient={onAddIngredient}
-            onSave={clickOnSaveStep}
             onCancel={resetStep}
         />
     );

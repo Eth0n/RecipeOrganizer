@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Color, ColoredBox } from "../../common/coloredBox/ColoredBox";
 import { IUnit } from "../../interfaces/interfaces";
 import { Step, UsedIngredient } from "../interfaces/interfaces";
-import { EditModeStep } from "./EditModeStep";
+import { EditModeStepReactForm } from "./EditModeStepReactForm";
 
 export const UiTextEdit = "Edit";
 export const UiTextDelete = "Delete";
@@ -15,31 +15,14 @@ export interface SingleStepProps {
 
 export function SingleStep(props: SingleStepProps) {
     const [editing, setEditing] = useState<boolean>(false);
-    const [step, setStep] = useState<Step>(props.step);
+    const [step] = useState<Step>(props.step);
 
     function onEdit() {
         setEditing(true);
     }
 
-    function onSave(description: string) {
-        setStep({
-            ...step,
-            description,
-        });
-        onExitEdit();
-    }
-
     function deleteStep() {
         props.deleteStep(step);
-    }
-
-    function onAddIngredient(ingredient: UsedIngredient) {
-        const newIngredients = [...step.ingredients, ingredient];
-        step.ingredients = newIngredients;
-        setStep({
-            ...step,
-            ingredients: newIngredients,
-        });
     }
 
     function onExitEdit() {
@@ -47,11 +30,10 @@ export function SingleStep(props: SingleStepProps) {
     }
 
     return editing ? (
-        <EditModeStep
+        <EditModeStepReactForm
             availableUnits={props.availableUnits}
             step={props.step}
-            onAddIngredient={onAddIngredient}
-            onSave={onSave}
+            //  onAddIngredient={onAddIngredient}
             onCancel={onExitEdit}
         />
     ) : (

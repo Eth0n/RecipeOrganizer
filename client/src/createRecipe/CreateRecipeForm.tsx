@@ -1,73 +1,70 @@
-import { useState } from "react";
+import { FormEvent } from "react";
+import { useForm } from "react-hook-form";
 import { InputType, TextInput } from "../common/textInput/TextInput";
 import { dispatchUnitIfNecessary } from "./ingredients/UnitDispatcher";
-import { CreatedRecipe, Step } from "./interfaces/interfaces";
+import { CreatedRecipe, IFormValues, Step } from "./interfaces/interfaces";
 import { ListOfSteps } from "./steps/ListOfSteps";
 
 export const PlaceholderName = "Name des Rezepts";
 export const PlaceholderDuration = "Dauer des Rezepts";
 
 function CreateRecipeForm() {
-    const [createdRecipe, setCreatedRecipe] = useState<CreatedRecipe>({
+    const { register, handleSubmit } = useForm<IFormValues>();
+
+    const recipeNew: CreatedRecipe = {
         name: "",
         duration: 0,
         steps: [],
-    });
+    };
+
+    function onSubmit(event: FormEvent) {
+        event.preventDefault();
+        event.stopPropagation();
+        handleSubmit((data) => {
+            console.log(data);
+        })(event);
+    }
 
     function addStepToList(createdStep: Step) {
         dispatchUnitIfNecessary(createdStep.ingredients);
-        setCreatedRecipe({
-            ...createdRecipe,
-            steps: [...createdRecipe.steps, createdStep],
-        });
+        recipeNew.steps.push(createdStep);
     }
 
     function deleteStepFromList(deletedStep: Step) {
-        const updatedSteps = createdRecipe.steps.filter(
+        const updatedSteps = recipeNew.steps.filter(
             (item) => item.id !== deletedStep.id
         );
-        setCreatedRecipe({
-            ...createdRecipe,
-            steps: updatedSteps,
-        });
-    }
-
-    function onNameChange(name: string) {
-        setCreatedRecipe({
-            ...createdRecipe,
-            name,
-        });
-    }
-
-    function onDurationChange(duration: number) {
-        setCreatedRecipe({
-            ...createdRecipe,
-            duration,
-        });
+        recipeNew.steps = updatedSteps;
     }
 
     return (
         <>
-            <div className="section">
-                <TextInput
-                    label="Name"
-                    placeholder={PlaceholderName}
-                    inputType={InputType.Text}
-                    value={createdRecipe.name}
-                    onChange={onNameChange}
-                />
-            </div>
-            <div className="section">
-                <TextInput
-                    label="Dauer in min"
-                    placeholder={PlaceholderDuration}
-                    inputType={InputType.Number}
-                    value={createdRecipe.duration}
-                    onChangeNumber={onDurationChange}
-                />
-            </div>
+            <form onSubmit={onSubmit}>
+                <div className="section">
+                    {
+                        <TextInput
+                            register={register}
+                            formName="recipeName"
+                            label="Name"
+                            placeholder={PlaceholderName}
+                            inputType={InputType.Text}
+                        />
+                    }
+                </div>
+                <div className="section">
+                    {
+                        <TextInput
+                            register={register}
+                            formName="duration"
+                            label="Dauer in min"
+                            placeholder={PlaceholderDuration}
+                            inputType={InputType.Number}
+                        />
+                    }
+                </div>
+            </form>
             <ListOfSteps
-                list={createdRecipe.steps}
+                list={recipeNew.steps}
                 addStepToList={addStepToList}
                 deleteStepFromList={deleteStepFromList}
             />

@@ -12,7 +12,7 @@ import { UiTextAddStep } from "../../createRecipe/steps/AddSingleStep";
 import {
     PlaceHolderDescription,
     UiTextSave,
-} from "../../createRecipe/steps/EditModeStep";
+} from "../../createRecipe/steps/EditModeStepReactForm";
 import { UiTextDelete, UiTextEdit } from "../../createRecipe/steps/SingleStep";
 import { Api } from "../../api/Api";
 import { getMockUnits } from "./mocks/MockUnits";
