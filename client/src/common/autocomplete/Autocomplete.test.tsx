@@ -132,6 +132,7 @@ function getExtendedAutocompleteProps(
     extension: Partial<AutocompleteProps>
 ): AutocompleteProps {
     return {
+        formName: "ingredientName",
         suggestions: [],
         placeholder: "Enter",
         label: "MockLabel",

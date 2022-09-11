@@ -7,11 +7,11 @@ import { IFormValues } from "../../createRecipe/interfaces/interfaces";
 
 export interface AutocompleteProps {
     formName: Path<IFormValues>;
-    register: UseFormRegister<IFormValues>;
     suggestions: string[];
     label: string;
     placeholder: string;
     onPickIngredient: (ingredient: string) => void;
+    register?: UseFormRegister<IFormValues>;
 }
 
 export interface AutocompleteState {
@@ -117,7 +117,7 @@ export function Autocomplete(props: AutocompleteProps) {
                 </label>
                 <div className="control">
                     <input
-                        {...props.register(props.formName)}
+                        {...props.register?.(props.formName)}
                         className="input"
                         type="text"
                         placeholder={props.placeholder}

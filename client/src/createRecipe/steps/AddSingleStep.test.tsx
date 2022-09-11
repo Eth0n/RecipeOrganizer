@@ -11,7 +11,7 @@ import {
     AddSingleStepProps,
     UiTextAddStep,
 } from "./AddSingleStep";
-import { PlaceHolderDescription } from "./EditModeStep";
+import { PlaceHolderDescription } from "./EditModeStepReactForm";
 describe("AddSingleStep.test.tsx", () => {
     it("shows added ingredient if user adds multiple ingredients in one go", async () => {
         render(<AddSingleStep {...getExtendedTextInputProps({})} />);

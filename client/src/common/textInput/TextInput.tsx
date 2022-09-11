@@ -8,11 +8,12 @@ export enum InputType {
 
 export interface TextInputProps {
     formName: Path<IFormValues>;
-    register: UseFormRegister<IFormValues>;
     placeholder: string;
     label: string;
     inputType: InputType;
     max?: number;
+    initalValue?: string | number;
+    register?: UseFormRegister<IFormValues>;
 }
 
 export function TextInput(props: TextInputProps) {
@@ -25,7 +26,8 @@ export function TextInput(props: TextInputProps) {
             </label>
             <div className="control">
                 <input
-                    {...props.register(props.formName)}
+                    {...props.register?.(props.formName)}
+                    defaultValue={props.initalValue}
                     className="input"
                     type={props.inputType}
                     placeholder={props.placeholder}

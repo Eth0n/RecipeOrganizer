@@ -19,20 +19,6 @@ describe("TextInput", () => {
         expect(input).toBeInTheDocument();
     });
 
-    it("passes value to parent component", () => {
-        const expectedValue = "hello";
-        const { input } = setUp(
-            getExtendedTextInputProps({
-                onChange: (value: string) => {
-                    expect(value).toBe(expectedValue);
-                },
-            })
-        );
-        fireEvent.change(input, {
-            target: { value: expectedValue },
-        });
-    });
-
     describe("only allows input based on type", () => {
         const sharedScenarios = [
             {
@@ -92,7 +78,7 @@ describe("TextInput", () => {
             const { input } = setUp(
                 getExtendedTextInputProps({
                     inputType: InputType.Text,
-                    value: givenValue,
+                    initalValue: givenValue,
                 })
             );
             expect(input.value).toBe(givenValue);
@@ -103,7 +89,7 @@ describe("TextInput", () => {
             const { input } = setUp(
                 getExtendedTextInputProps({
                     inputType: InputType.Number,
-                    value: givenValue,
+                    initalValue: givenValue,
                 })
             );
             expect(input.value).toBe("");
@@ -114,7 +100,7 @@ describe("TextInput", () => {
             const { input } = setUp(
                 getExtendedTextInputProps({
                     inputType: InputType.Number,
-                    value: givenValue,
+                    initalValue: givenValue,
                 })
             );
             expect(input.value).toBe(`${givenValue}`);
@@ -136,6 +122,7 @@ function getExtendedTextInputProps(
     extension: Partial<TextInputProps>
 ): TextInputProps {
     return {
+        formName: "duration",
         placeholder: "mockPlaceHolder",
         label: "mockLabel",
         inputType: InputType.Text,
