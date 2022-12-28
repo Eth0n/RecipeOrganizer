@@ -17,7 +17,6 @@ export class AutoCompleter {
         key: Key
     ): AutocompleteState | null {
         const { activeSuggestion, filteredSuggestions } = autoCompleteState;
-
         if (key === Key.Enter) {
             return {
                 ...autoCompleteState,

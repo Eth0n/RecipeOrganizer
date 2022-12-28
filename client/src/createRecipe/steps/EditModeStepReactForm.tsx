@@ -2,7 +2,7 @@ import { IUnit } from "../../interfaces/interfaces";
 import { AddIngredient } from "../ingredients/AddIngredient";
 import { IFormValues, Step, UsedIngredient } from "../interfaces/interfaces";
 import { useForm } from "react-hook-form";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 
 export const PlaceHolderDescription = "Beschreibe hier den Schritt kurz";
 export const UiTextSave = "Save";
@@ -15,23 +15,36 @@ export const PlaceholderCustomUnitShort = "kurz";
 export interface EditModeStepProps {
     step: Step;
     availableUnits: IUnit[];
+    onSave: (editedStep: Step) => void;
     onCancel: () => void;
 }
 
 export function EditModeStepReactForm(props: EditModeStepProps) {
     const { register, handleSubmit } = useForm<IFormValues>();
+    const [tempIngredients, setTempIngredients] = useState<UsedIngredient[]>(
+        props.step.ingredients
+    );
+
+    let editedDescription: string;
 
     function onSubmit(event: FormEvent) {
         event.preventDefault();
         event.stopPropagation();
-        handleSubmit((data) => {
-            console.log(data);
+        handleSubmit((data: IFormValues) => {
+            editedDescription = data.description;
         })(event);
     }
 
-    function onAddIngredient(data2: UsedIngredient) {
-        console.log(data2);
-        console.log("Save ingredient");
+    function onSave() {
+        props.onSave({
+            description: editedDescription,
+            id: props.step.id,
+            ingredients: tempIngredients,
+        });
+    }
+
+    function onAddIngredient(usedIngredient: UsedIngredient) {
+        setTempIngredients([...tempIngredients, usedIngredient]);
     }
 
     return (
@@ -54,6 +67,7 @@ export function EditModeStepReactForm(props: EditModeStepProps) {
                                 type="submit"
                                 placeholder={UiTextSave}
                                 value={UiTextSave}
+                                onClick={onSave}
                             />
                         }
                         {
@@ -61,22 +75,19 @@ export function EditModeStepReactForm(props: EditModeStepProps) {
                             <button onClick={props.onCancel}>Cancel</button>
                         }
                     </form>
-                    {props.step.ingredients.map(
-                        (usedIngredient: UsedIngredient) => {
-                            return (
-                                <div key={usedIngredient.name}>
-                                    <span>{usedIngredient.name} </span>
-                                    <span>
-                                        {usedIngredient.quantity}{" "}
-                                        {usedIngredient.unit
-                                            ? usedIngredient.unit
-                                                  .shortDescription
-                                            : ""}
-                                    </span>
-                                </div>
-                            );
-                        }
-                    )}
+                    {tempIngredients.map((usedIngredient: UsedIngredient) => {
+                        return (
+                            <div key={usedIngredient.name}>
+                                <span>{usedIngredient.name} </span>
+                                <span>
+                                    {usedIngredient.quantity}{" "}
+                                    {usedIngredient.unit
+                                        ? usedIngredient.unit.shortDescription
+                                        : ""}
+                                </span>
+                            </div>
+                        );
+                    })}
                     {
                         // AddIngredient
                         <AddIngredient

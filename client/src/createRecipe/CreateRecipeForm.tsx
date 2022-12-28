@@ -1,8 +1,8 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { InputType, TextInput } from "../common/textInput/TextInput";
 import { dispatchUnitIfNecessary } from "./ingredients/UnitDispatcher";
-import { CreatedRecipe, IFormValues, Step } from "./interfaces/interfaces";
+import { IFormValues, Step } from "./interfaces/interfaces";
 import { ListOfSteps } from "./steps/ListOfSteps";
 
 export const PlaceholderName = "Name des Rezepts";
@@ -10,12 +10,7 @@ export const PlaceholderDuration = "Dauer des Rezepts";
 
 function CreateRecipeForm() {
     const { register, handleSubmit } = useForm<IFormValues>();
-
-    const recipeNew: CreatedRecipe = {
-        name: "",
-        duration: 0,
-        steps: [],
-    };
+    const [steps, setSteps] = useState<Step[]>([]);
 
     function onSubmit(event: FormEvent) {
         event.preventDefault();
@@ -27,14 +22,23 @@ function CreateRecipeForm() {
 
     function addStepToList(createdStep: Step) {
         dispatchUnitIfNecessary(createdStep.ingredients);
-        recipeNew.steps.push(createdStep);
+        steps.push(createdStep);
+        setSteps([...steps]);
+    }
+
+    function editStepOnList(editedStep: Step) {
+        const indexOfStep = steps.findIndex(
+            (item) => item.id === editedStep.id
+        );
+        if (indexOfStep !== -1) {
+            steps[indexOfStep] = editedStep;
+        }
+        setSteps([...steps]);
     }
 
     function deleteStepFromList(deletedStep: Step) {
-        const updatedSteps = recipeNew.steps.filter(
-            (item) => item.id !== deletedStep.id
-        );
-        recipeNew.steps = updatedSteps;
+        const updatedSteps = steps.filter((item) => item.id !== deletedStep.id);
+        setSteps([...updatedSteps]);
     }
 
     return (
@@ -64,8 +68,9 @@ function CreateRecipeForm() {
                 </div>
             </form>
             <ListOfSteps
-                list={recipeNew.steps}
+                list={steps}
                 addStepToList={addStepToList}
+                editStepFromList={editStepOnList}
                 deleteStepFromList={deleteStepFromList}
             />
         </>

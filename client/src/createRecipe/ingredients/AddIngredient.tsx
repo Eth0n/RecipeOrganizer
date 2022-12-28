@@ -1,9 +1,10 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Autocomplete } from "../../common/autocomplete/Autocomplete";
 import { TextInput, InputType } from "../../common/textInput/TextInput";
 import { IUnit } from "../../interfaces/interfaces";
-import { IFormValues } from "../interfaces/interfaces";
+import { IFormValues, UsedIngredient } from "../interfaces/interfaces";
+import { getUsedIngredientFromForm } from "./IngredientUtils";
 
 export const PlaceholderIngredientName = "Zutat";
 export const PlaceholderIngredientAmount = "Menge";
@@ -14,11 +15,12 @@ export const PlaceholderCustomUnitShort = "kurz";
 
 export interface AddIngredientProps {
     availableUnits: IUnit[];
-    saveIngredient: (data: any) => void;
+    saveIngredient: (data: UsedIngredient) => void;
 }
 
 export function AddIngredient(props: AddIngredientProps) {
     const { register, handleSubmit } = useForm<IFormValues>();
+    let inputIngredient = "";
 
     const [selectedUnit, setSelectedUnit] = useState("");
 
@@ -26,26 +28,35 @@ export function AddIngredient(props: AddIngredientProps) {
         event.preventDefault();
         event.stopPropagation();
         handleSubmit((data) => {
-            console.log(data);
-            props.saveIngredient(data);
+            const ingredient = getUsedIngredientFromForm(
+                data,
+                inputIngredient,
+                props.availableUnits
+            );
+            props.saveIngredient(ingredient);
         })(event);
     }
 
-    function onUnitChanged(unitChangedEvent: ChangeEvent) {
-        console.log(unitChangedEvent);
-        setSelectedUnit("eigene");
+    function onUnitChanged(unitChangedEvent: ChangeEvent<HTMLSelectElement>) {
+        setSelectedUnit(unitChangedEvent.target.value);
     }
 
     function onHandleInputIngredient(value: string) {
-        console.log(value);
+        inputIngredient = value;
     }
 
     function getDefaultSelectedValue(props: AddIngredientProps): string {
         return props.availableUnits[0] && props.availableUnits[0].name;
     }
 
+    function preventEnterToSubmit(event: React.KeyboardEvent) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+        }
+    }
+
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} onKeyDown={preventEnterToSubmit}>
             <div className="columns">
                 <div className="column">
                     <Autocomplete

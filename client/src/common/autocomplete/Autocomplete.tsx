@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from "react";
-import { Key } from "ts-key-enum";
 import { AutoCompleter } from "./AutoCompleter";
 import "./AutoComplete.css";
 import { Path, UseFormRegister } from "react-hook-form";
 import { IFormValues } from "../../createRecipe/interfaces/interfaces";
+import { Key } from "ts-key-enum";
 
 export interface AutocompleteProps {
     formName: Path<IFormValues>;

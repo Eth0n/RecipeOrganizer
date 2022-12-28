@@ -8,6 +8,7 @@ import { IUnit } from "../../interfaces/interfaces";
 export interface ListOfStepsProps {
     list: Step[];
     addStepToList: (createdStep: Step) => void;
+    editStepFromList: (editStep: Step) => void;
     deleteStepFromList: (stepToDelete: Step) => void;
 }
 
@@ -34,6 +35,7 @@ export function ListOfSteps(props: ListOfStepsProps) {
                                 availableUnits={availableUnits}
                                 key={listItem.id}
                                 step={listItem}
+                                editStep={props.editStepFromList}
                                 deleteStep={props.deleteStepFromList}
                             />
                         );

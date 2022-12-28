@@ -23,6 +23,11 @@ export function AddSingleStep(props: AddSingleStepProps) {
         setStep({ ...step, id: generateId() });
     }
 
+    function onSave(addedStep: Step) {
+        props.onStepAdded(addedStep);
+        resetStep();
+    }
+
     function resetStep() {
         setStep({
             id: "",
@@ -40,6 +45,7 @@ export function AddSingleStep(props: AddSingleStepProps) {
         <EditModeStepReactForm
             availableUnits={props.availableUnits}
             step={step}
+            onSave={onSave}
             onCancel={resetStep}
         />
     );

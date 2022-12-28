@@ -10,6 +10,7 @@ export const UiTextDelete = "Delete";
 export interface SingleStepProps {
     step: Step;
     availableUnits: IUnit[];
+    editStep: (stepToEdit: Step) => void;
     deleteStep: (stepToDelete: Step) => void;
 }
 
@@ -33,7 +34,7 @@ export function SingleStep(props: SingleStepProps) {
         <EditModeStepReactForm
             availableUnits={props.availableUnits}
             step={props.step}
-            //  onAddIngredient={onAddIngredient}
+            onSave={props.editStep}
             onCancel={onExitEdit}
         />
     ) : (
